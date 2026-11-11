@@ -1,0 +1,99 @@
+:root {
+  --paper: #F1F3F1;
+  --paper-raised: #FFFFFF;
+  --ink: #12181D;
+  --ink-soft: #4B565C;
+  --line: #D7DEDA;
+  --accent: #B97116;
+  --accent-glow: #E0972E;
+  --bio: #2F7A56;
+  --qui: #7C57C9;
+  --fis: #3159C9;
+  --easy: #2F7A56;
+  --mid: #B97116;
+  --hard: #8C3B3B;
+  --focus: #3159C9;
+}
+
+html.dark {
+  --paper: #0B1013;
+  --paper-raised: #12181C;
+  --ink: #ECEEEE;
+  --ink-soft: #A8B1B4;
+  --line: #263130;
+  --accent: #E0972E;
+  --accent-glow: #F0AD4E;
+  --bio: #49B084;
+  --qui: #A88CE8;
+  --fis: #7095F0;
+  --easy: #49B084;
+  --mid: #E0972E;
+  --hard: #C77C79;
+  --focus: #7095F0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.6;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+.font-display {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+}
+
+.font-mono {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: #fff;
+  color: #000;
+  padding: .6rem 1rem;
+  z-index: 100;
+  border-radius: 0 0 8px 0;
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

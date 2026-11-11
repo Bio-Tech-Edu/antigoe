@@ -1,0 +1,66 @@
+:root {
+  --paper: #F1F3F1;
+  --paper-raised: #FFFFFF;
+  --ink: #12181D;
+  --ink-soft: #4B565C;
+  --line: #D7DEDA;
+  --accent: #B97116;
+  --accent-glow: #E0972E;
+  --bio: #2F7A56;
+  --qui: #7C57C9;
+  --fis: #3159C9;
+  --easy: #2F7A56;
+  --mid: #B97116;
+  --hard: #8C3B3B;
+  --focus: #3159C9;
+}
+
+html.dark {
+  --paper: #0B1013;
+  --paper-raised: #12181C;
+  --ink: #ECEEEE;
+  --ink-soft: #A8B1B4;
+  --line: #263130;
+  --accent: #E0972E;
+  --accent-glow: #F0AD4E;
+  --bio: #49B084;
+  --qui: #A88CE8;
+  --fis: #7095F0;
+  --easy: #49B084;
+  --mid: #E0972E;
+  --hard: #C77C79;
+  --focus: #7095F0;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.fade-in {
+  animation: fadeIn .3s ease both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in {
+    animation: none;
+  }
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2.5px solid var(--focus);
+  outline-offset: 2px;
+}
