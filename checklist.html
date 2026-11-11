@@ -1,405 +1,143 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Checklist de Estudos da Reta Final — Ciências da Natureza e Matemática e Matemática e Matemática (ENEM)</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
-<style>
-  :root{--ink:#12181D;--ink-soft:#4B565C;--line:#D7DEDA;--fis:#3159C9;--bio:#2F7A56;--qui:#7C57C9}
-  *{box-sizing:border-box}
-  body{font-family:'IBM Plex Sans',system-ui,sans-serif;color:var(--ink);max-width:820px;margin:0 auto;padding:32px 24px;line-height:1.6}
-  h1{font-family:'Space Grotesk',system-ui,sans-serif;font-size:1.7rem;margin:0 0 4px;font-weight:700}
-  h2{font-family:'Space Grotesk',system-ui,sans-serif;font-size:1.05rem;border-bottom:2px solid var(--fis);padding-bottom:6px;margin-top:34px}
-  h3{font-size:.9rem;margin:18px 0 8px;font-weight:600}
-  .sub{color:var(--ink-soft);font-size:.9rem}
-  .field{display:flex;gap:24px;margin:18px 0}
-  .field span{flex:1;border-bottom:1px solid var(--ink);padding:4px 2px;color:var(--ink-soft);font-size:.85rem}
-  ul.cb{list-style:none;padding-left:0;margin:8px 0}
-  ul.cb li{margin:8px 0;font-size:.92rem;display:flex;gap:10px;align-items:flex-start}
-  .box{display:inline-block;width:14px;height:14px;border:1.5px solid var(--ink);border-radius:3px;flex-shrink:0;margin-top:3px}
-  table{width:100%;border-collapse:collapse;font-size:.85rem;margin-top:10px}
-  th{background:var(--ink);color:#fff;text-align:left;padding:9px 10px;font-weight:600}
-  td{border:1px solid var(--line);padding:9px 10px;vertical-align:top}
-  ol.proto li{margin:11px 0;font-size:.92rem}
-  .tag{display:inline-block;font-weight:700;font-size:.78rem;padding:2px 0}
-  .tag.bio{color:var(--bio)} .tag.qui{color:var(--qui)} .tag.fis{color:var(--fis)}
-  .btnbar{display:flex;gap:10px;margin:18px 0 30px}
-  .btnbar button,.btnbar a{background:var(--fis);color:#fff;border:none;padding:10px 18px;border-radius:8px;font-weight:600;cursor:pointer;text-decoration:none;font-size:.85rem;font-family:inherit}
-  .btnbar a{background:var(--ink)}
-
-  /* ================= FOOTER ================= */
-  .site-footer{padding:2rem 1rem 3rem;text-align:center;border-top:1px solid var(--line);
-    margin-top:3rem;color:var(--ink-soft);font-size:.85rem}
-  .site-footer .logos{display:flex;justify-content:center;align-items:center;gap:1.5rem;margin-bottom:1rem;flex-wrap:wrap}
-  .site-footer .logos img{height:50px;object-fit:contain;opacity:.92;background:rgba(255,255,255,.92);padding:6px 10px;border-radius:8px}
-  .site-footer a{color:var(--fis);text-decoration:none}
-  .site-footer a:hover{text-decoration:underline}
-  }
-
-  /* ================= VERSÃO INTERATIVA (marcações salvas no navegador) ================= */
-  .progress{margin:0 0 26px;padding:14px 16px;border:1px solid var(--line,#E1E6E3);border-radius:10px;background:#F7F9F8}
-  .progress-topo{display:flex;flex-wrap:wrap;align-items:center;gap:12px;justify-content:space-between}
-  .progress-texto{margin:0;font-size:.82rem;font-weight:600;color:var(--ink,#12181D)}
-  .btn-limpar{background:none;border:1px solid var(--line,#E1E6E3);border-radius:8px;padding:6px 12px;font-size:.78rem;font-weight:600;color:var(--ink-soft,#55606A);cursor:pointer;font-family:inherit}
-  .btn-limpar:hover{color:var(--ink,#12181D);border-color:var(--ink,#12181D)}
-  .progress-barra{height:7px;border-radius:9999px;background:#E3E8E5;margin-top:10px;overflow:hidden}
-  .progress-barra span{display:block;height:100%;width:0;border-radius:9999px;background:var(--fis,#3159C9);transition:width .25s ease}
-  ul.cb input.box{appearance:none;-webkit-appearance:none;width:15px;height:15px;border:1.5px solid var(--ink,#12181D);border-radius:3px;flex-shrink:0;margin:3px 0 0;cursor:pointer;background:#fff;position:relative;display:inline-block}
-  ul.cb input.box:checked{background:var(--fis,#3159C9);border-color:var(--fis,#3159C9)}
-  ul.cb input.box:checked::after{content:'';position:absolute;left:4px;top:0;width:5px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
-  ul.cb input.box:focus-visible{outline:2.5px solid var(--fis,#3159C9);outline-offset:2px}
-  li.revisado > span:last-child{text-decoration:line-through;opacity:.5}
-  @media print{.progress{display:none}.btnbar{display:none}ul.cb input.box{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
-  @media (prefers-reduced-motion:reduce){.progress-barra span{transition:none}}
-
-  /* ================= VERSÃO INTERATIVA (marcações salvas no navegador) ================= */
-  .progress{margin:0 0 26px;padding:14px 16px;border:1px solid var(--line,#E1E6E3);border-radius:10px;background:#F7F9F8}
-  .progress-topo{display:flex;flex-wrap:wrap;align-items:center;gap:12px;justify-content:space-between}
-  .progress-texto{margin:0;font-size:.82rem;font-weight:600;color:var(--ink,#12181D)}
-  .btn-limpar{background:none;border:1px solid var(--line,#E1E6E3);border-radius:8px;padding:6px 12px;font-size:.78rem;font-weight:600;color:var(--ink-soft,#55606A);cursor:pointer;font-family:inherit}
-  .btn-limpar:hover{color:var(--ink,#12181D);border-color:var(--ink,#12181D)}
-  .progress-barra{height:7px;border-radius:9999px;background:#E3E8E5;margin-top:10px;overflow:hidden}
-  .progress-barra span{display:block;height:100%;width:0;border-radius:9999px;background:var(--fis,#3159C9);transition:width .25s ease}
-  ul.cb input.box{appearance:none;-webkit-appearance:none;width:15px;height:15px;border:1.5px solid var(--ink,#12181D);border-radius:3px;flex-shrink:0;margin:3px 0 0;cursor:pointer;background:#fff;position:relative;display:inline-block}
-  ul.cb input.box:checked{background:var(--fis,#3159C9);border-color:var(--fis,#3159C9)}
-  ul.cb input.box:checked::after{content:'';position:absolute;left:4px;top:0;width:5px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
-  ul.cb input.box:focus-visible{outline:2.5px solid var(--fis,#3159C9);outline-offset:2px}
-  li.revisado > span:last-child{text-decoration:line-through;opacity:.5}
-  @media print{.progress{display:none}.btnbar{display:none}ul.cb input.box{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
-  @media (prefers-reduced-motion:reduce){.progress-barra span{transition:none}}
-
-  /* ================= VERSÃO INTERATIVA (marcações salvas no navegador) ================= */
-  .progress{margin:0 0 26px;padding:14px 16px;border:1px solid var(--line,#E1E6E3);border-radius:10px;background:#F7F9F8}
-  .progress-topo{display:flex;flex-wrap:wrap;align-items:center;gap:12px;justify-content:space-between}
-  .progress-texto{margin:0;font-size:.82rem;font-weight:600;color:var(--ink,#12181D)}
-  .btn-limpar{background:none;border:1px solid var(--line,#E1E6E3);border-radius:8px;padding:6px 12px;font-size:.78rem;font-weight:600;color:var(--ink-soft,#55606A);cursor:pointer;font-family:inherit}
-  .btn-limpar:hover{color:var(--ink,#12181D);border-color:var(--ink,#12181D)}
-  .progress-barra{height:7px;border-radius:9999px;background:#E3E8E5;margin-top:10px;overflow:hidden}
-  .progress-barra span{display:block;height:100%;width:0;border-radius:9999px;background:var(--fis,#3159C9);transition:width .25s ease}
-  ul.cb input.box{appearance:none;-webkit-appearance:none;width:15px;height:15px;border:1.5px solid var(--ink,#12181D);border-radius:3px;flex-shrink:0;margin:3px 0 0;cursor:pointer;background:#fff;position:relative;display:inline-block}
-  ul.cb input.box:checked{background:var(--fis,#3159C9);border-color:var(--fis,#3159C9)}
-  ul.cb input.box:checked::after{content:'';position:absolute;left:4px;top:0;width:5px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
-  ul.cb input.box:focus-visible{outline:2.5px solid var(--fis,#3159C9);outline-offset:2px}
-  li.revisado > span:last-child{text-decoration:line-through;opacity:.5}
-  @media print{.progress{display:none}.btnbar{display:none}ul.cb input.box{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
-  @media (prefers-reduced-motion:reduce){.progress-barra span{transition:none}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checklist de Estudos da Reta Final — Ciências da Natureza</title>
+  <meta name="description" content="Checklist de estudos da reta final para o 2º dia do ENEM, com revisão de conteúdos e acompanhamento de progresso.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+  <style>
+    body{font-family:'IBM Plex Sans',system-ui,sans-serif;color:var(--ink);max-width:820px;margin:0 auto;padding:32px 24px;line-height:1.6}
+    h1{font-family:'Space Grotesk',system-ui,sans-serif;font-size:1.7rem;margin:0 0 4px;font-weight:700}
+    h2{font-family:'Space Grotesk',system-ui,sans-serif;font-size:1.05rem;border-bottom:2px solid var(--fis);padding-bottom:6px;margin-top:34px}
+    h3{font-size:.9rem;margin:18px 0 8px;font-weight:600}
+    .sub{color:var(--ink-soft);font-size:.9rem}
+    .field{display:flex;gap:24px;margin:18px 0}
+    .field span{flex:1;border-bottom:1px solid var(--ink);padding:4px 2px;color:var(--ink-soft);font-size:.85rem}
+    ul.cb{list-style:none;padding-left:0;margin:8px 0}
+    ul.cb li{margin:8px 0;font-size:.92rem;display:flex;gap:10px;align-items:flex-start}
+    .box{display:inline-block;width:14px;height:14px;border:1.5px solid var(--ink);border-radius:3px;flex-shrink:0;margin-top:3px}
+    table{width:100%;border-collapse:collapse;font-size:.85rem;margin-top:10px}
+    th{background:var(--ink);color:#fff;text-align:left;padding:9px 10px;font-weight:600}
+    td{border:1px solid var(--line);padding:9px 10px;vertical-align:top}
+    ol.proto li{margin:11px 0;font-size:.92rem}
+    .tag{display:inline-block;font-weight:700;font-size:.78rem;padding:2px 0}
+    .tag.bio{color:var(--bio)} .tag.qui{color:var(--qui)} .tag.fis{color:var(--fis)}
+    .btnbar{display:flex;gap:10px;margin:18px 0 30px}
+    .btnbar button,.btnbar a{background:var(--fis);color:#fff;border:none;padding:10px 18px;border-radius:8px;font-weight:600;cursor:pointer;text-decoration:none;font-size:.85rem;font-family:inherit}
+    .btnbar a{background:var(--ink)}
+    .site-footer{padding:2rem 1rem 3rem;text-align:center;border-top:1px solid var(--line);margin-top:3rem;color:var(--ink-soft);font-size:.85rem}
+    .site-footer .logos{display:flex;justify-content:center;align-items:center;gap:1.5rem;margin-bottom:1rem;flex-wrap:wrap}
+    .site-footer .logos img{height:50px;object-fit:contain;opacity:.92;background:rgba(255,255,255,.92);padding:6px 10px;border-radius:8px}
+    .site-footer a{color:var(--fis);text-decoration:none}
+    .site-footer a:hover{text-decoration:underline}
+    .progress{margin:0 0 26px;padding:14px 16px;border:1px solid var(--line,#E1E6E3);border-radius:10px;background:#F7F9F8}
+    .progress-topo{display:flex;flex-wrap:wrap;align-items:center;gap:12px;justify-content:space-between}
+    .progress-texto{margin:0;font-size:.82rem;font-weight:600;color:var(--ink,#12181D)}
+    .btn-limpar{background:none;border:1px solid var(--line,#E1E6E3);border-radius:8px;padding:6px 12px;font-size:.78rem;font-weight:600;color:var(--ink-soft,#55606A);cursor:pointer;font-family:inherit}
+    .progress-barra{height:7px;border-radius:9999px;background:#E3E8E5;margin-top:10px;overflow:hidden}
+    .progress-barra span{display:block;height:100%;width:0;border-radius:9999px;background:var(--fis,#3159C9);transition:width .25s ease}
+    ul.cb input.box{appearance:none;-webkit-appearance:none;width:15px;height:15px;border:1.5px solid var(--ink,#12181D);border-radius:3px;flex-shrink:0;margin:3px 0 0;cursor:pointer;background:#fff;position:relative}
+    ul.cb input.box:checked{background:var(--fis,#3159C9);border-color:var(--fis,#3159C9)}
+    ul.cb input.box:checked::after{content:'';position:absolute;left:4px;top:0;width:5px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+    ul.cb input.box:focus-visible{outline:2.5px solid var(--fis,#3159C9);outline-offset:2px}
+    li.revisado > span:last-child{text-decoration:line-through;opacity:.5}
+    @media print{.progress{display:none}.btnbar{display:none}ul.cb input.box{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+    @media (prefers-reduced-motion:reduce){.progress-barra span{transition:none}}
+  </style>
 </head>
 <body data-checklist="d2">
+  <h1>Guia de Revisão e Checklist de Reta Final</h1>
+  <p class="sub">Ciências da Natureza e Matemática e suas Tecnologias · ENEM, 2º dia · Plano "Raio-X Estratégico"</p>
 
-<h1>Guia de Revisão e Checklist de Reta Final</h1>
-<p class="sub">Ciências da Natureza e Matemática e suas Tecnologias · ENEM, 2º dia · Plano "Raio-X Estratégico"</p>
-
-<div class="btnbar">
-  <button onclick="window.print()">Imprimir / salvar em PDF</button>
-  <a href="segundo-dia.html">Voltar ao painel</a>
-</div>
-
-<div class="field">
-  <span>Nome do estudante: </span>
-  <span>Turma / ano: </span>
-</div>
-
-<div class="progress" id="progresso" hidden>
-  <div class="progress-topo">
-    <p class="progress-texto" id="progressTexto" aria-live="polite"></p>
-    <button type="button" class="btn-limpar" id="limpar">Limpar marcações</button>
+  <div class="btnbar">
+    <button type="button" onclick="window.print()">Imprimir / salvar em PDF</button>
+    <a href="segundo-dia.html">Voltar ao painel</a>
   </div>
-  <div class="progress-barra" role="presentation"><span id="progressFill"></span></div>
-</div>
 
-<div class="progress" id="progresso" hidden>
-  <div class="progress-topo">
-    <p class="progress-texto" id="progressTexto" aria-live="polite"></p>
-    <button type="button" class="btn-limpar" id="limpar">Limpar marcações</button>
+  <div class="field">
+    <span>Nome do estudante: </span>
+    <span>Turma / ano: </span>
   </div>
-  <div class="progress-barra" role="presentation"><span id="progressFill"></span></div>
-</div>
 
-<div class="progress" id="progresso" hidden>
-  <div class="progress-topo">
-    <p class="progress-texto" id="progressTexto" aria-live="polite"></p>
-    <button type="button" class="btn-limpar" id="limpar">Limpar marcações</button>
+  <div class="progress" id="progresso" hidden>
+    <div class="progress-topo">
+      <p class="progress-texto" id="progressTexto" aria-live="polite"></p>
+      <button type="button" class="btn-limpar" id="limpar">Limpar marcações</button>
+    </div>
+    <div class="progress-barra" role="presentation"><span id="progressFill"></span></div>
   </div>
-  <div class="progress-barra" role="presentation"><span id="progressFill"></span></div>
-</div>
 
-<h2>1. Checklist de conteúdos prioritários por componente</h2>
+  <h2>1. Checklist de conteúdos prioritários por componente</h2>
+  <h3><span class="tag bio">Biologia</span></h3>
+  <ul class="cb">
+    <li><span class="box"></span><span><strong>Ecologia:</strong> fluxo de energia, teias alimentares, ciclos da água, carbono e nitrogênio.</span></li>
+    <li><span class="box"></span><span><strong>Impactos ambientais:</strong> eutrofização, bioacumulação/biomagnificação, ilhas de calor e inversão térmica.</span></li>
+    <li><span class="box"></span><span><strong>Citologia:</strong> organelas energéticas (mitocôndria e cloroplasto) e transportes de membrana (osmose e difusão).</span></li>
+    <li><span class="box"></span><span><strong>Biotecnologia:</strong> enzimas de restrição, DNA recombinante, tecnologia PCR e vacinas de RNA × soro.</span></li>
+    <li><span class="box"></span><span><strong>Saúde pública:</strong> ciclos de vida e prevenção de arboviroses (dengue, zika e outras), doença de Chagas e esquistossomose.</span></li>
+  </ul>
 
-<h3><span class="tag bio">Biologia</span></h3>
-<ul class="cb">
-  <li><span class="box"></span><span><strong>Ecologia:</strong> fluxo de energia, teias alimentares, ciclos da água, carbono e nitrogênio.</span></li>
-  <li><span class="box"></span><span><strong>Impactos ambientais:</strong> eutrofização, bioacumulação/biomagnificação, ilhas de calor e inversão térmica.</span></li>
-  <li><span class="box"></span><span><strong>Citologia:</strong> organelas energéticas (mitocôndria e cloroplasto) e transportes de membrana (osmose e difusão).</span></li>
-  <li><span class="box"></span><span><strong>Biotecnologia:</strong> enzimas de restrição, DNA recombinante, tecnologia PCR e vacinas de RNA × soro.</span></li>
-  <li><span class="box"></span><span><strong>Saúde pública:</strong> ciclos de vida e prevenção de arboviroses (dengue, zika e outras), doença de Chagas e esquistossomose.</span></li>
-</ul>
+  <h3><span class="tag qui">Química</span></h3>
+  <ul class="cb">
+    <li><span class="box"></span><span><strong>Química ambiental:</strong> chuva ácida, destruição da camada de ozônio, efeito estufa e Química Verde.</span></li>
+    <li><span class="box"></span><span><strong>Físico-química:</strong> estequiometria (rendimento e pureza), unidades de concentração de soluções (g/L, mol/L, ppm).</span></li>
+    <li><span class="box"></span><span><strong>Química orgânica:</strong> identificação de funções orgânicas, reações de esterificação e caracterização de sabões/detergentes.</span></li>
+    <li><span class="box"></span><span><strong>Eletroquímica:</strong> diferença de potencial em pilhas, agentes oxidantes/redutores e proteção catódica.</span></li>
+    <li><span class="box"></span><span><strong>Separação de misturas:</strong> decantação, filtração, destilação fracionada no refino do petróleo.</span></li>
+  </ul>
 
-<h3><span class="tag qui">Química</span></h3>
-<ul class="cb">
-  <li><span class="box"></span><span><strong>Química ambiental:</strong> chuva ácida, destruição da camada de ozônio, efeito estufa e Química Verde.</span></li>
-  <li><span class="box"></span><span><strong>Físico-química:</strong> estequiometria (rendimento e pureza), unidades de concentração de soluções (g/L, mol/L, ppm).</span></li>
-  <li><span class="box"></span><span><strong>Química orgânica:</strong> identificação de funções orgânicas, reações de esterificação e caracterização de sabões/detergentes.</span></li>
-  <li><span class="box"></span><span><strong>Eletroquímica:</strong> diferença de potencial em pilhas, agentes oxidantes/redutores e proteção catódica.</span></li>
-  <li><span class="box"></span><span><strong>Separação de misturas:</strong> decantação, filtração, destilação fracionada no refino do petróleo.</span></li>
-</ul>
+  <h3><span class="tag fis">Física</span></h3>
+  <ul class="cb">
+    <li><span class="box"></span><span><strong>Ondulatória:</strong> equação fundamental (v = λ · f), refração, difração, interferência e eco/ressonância.</span></li>
+    <li><span class="box"></span><span><strong>Eletrodinâmica:</strong> leis de Ohm, associação de resistores (série/paralelo) e cálculo de consumo elétrico (E = P · Δt).</span></li>
+    <li><span class="box"></span><span><strong>Termofísica:</strong> trocas de calor (Q = m · c · ΔT), calor latente e processos de condução, convecção e radiação.</span></li>
+    <li><span class="box"></span><span><strong>Mecânica:</strong> conservação da energia mecânica (potencial × cinética) e interpretação de gráficos v × t.</span></li>
+    <li><span class="box"></span><span><strong>Óptica geométrica:</strong> formação de imagens em lentes e espelhos, refração da luz e visão humana.</span></li>
+  </ul>
 
-<h3><span class="tag fis">Física</span></h3>
-<ul class="cb">
-  <li><span class="box"></span><span><strong>Ondulatória:</strong> equação fundamental (v = λ · f), refração, difração, interferência e eco/ressonância.</span></li>
-  <li><span class="box"></span><span><strong>Eletrodinâmica:</strong> leis de Ohm, associação de resistores (série/paralelo) e cálculo de consumo elétrico (E = P · Δt).</span></li>
-  <li><span class="box"></span><span><strong>Termofísica:</strong> trocas de calor (Q = m · c · ΔT), calor latente e processos de condução, convecção e radiação.</span></li>
-  <li><span class="box"></span><span><strong>Mecânica:</strong> conservação da energia mecânica (potencial × cinética) e interpretação de gráficos v × t.</span></li>
-  <li><span class="box"></span><span><strong>Óptica geométrica:</strong> formação de imagens em lentes e espelhos, refração da luz e visão humana.</span></li>
-</ul>
+  <h3><span class="tag fis">Matemática</span></h3>
+  <ul class="cb">
+    <li><span class="box"></span><span><strong>Razão, proporção e porcentagem:</strong> regra de três, acréscimos e descontos, juros simples e compostos.</span></li>
+    <li><span class="box"></span><span><strong>Funções:</strong> leitura e interpretação de gráficos, função afim (linear) e função quadrática; máximos e mínimos.</span></li>
+    <li><span class="box"></span><span><strong>Geometria:</strong> áreas e volumes de prismas, cilindros e cones; teorema de Pitágoras e semelhança de triângulos.</span></li>
+    <li><span class="box"></span><span><strong>Estatística e probabilidade:</strong> média, mediana, moda, desvio padrão, tabelas e gráficos; probabilidade simples e condicional.</span></li>
+    <li><span class="box"></span><span><strong>Progressões e geometria analítica:</strong> PA e PG, plano cartesiano e distância entre pontos.</span></li>
+  </ul>
 
-<h3><span class="tag fis">Matemática</span></h3>
-<ul class="cb">
-  <li><span class="box"></span><span><strong>Razão, proporção e porcentagem:</strong> regra de três, acréscimos e descontos, juros simples e compostos.</span></li>
-  <li><span class="box"></span><span><strong>Funções:</strong> leitura e interpretação de gráficos, função afim (linear) e função quadrática; máximos e mínimos.</span></li>
-  <li><span class="box"></span><span><strong>Geometria:</strong> áreas e volumes de prismas, cilindros e cones; teorema de Pitágoras e semelhança de triângulos.</span></li>
-  <li><span class="box"></span><span><strong>Estatística e probabilidade:</strong> média, mediana, moda, desvio padrão, tabelas e gráficos; probabilidade simples e condicional.</span></li>
-  <li><span class="box"></span><span><strong>Progressões e geometria analítica:</strong> PA e PG, plano cartesiano e distância entre pontos.</span></li>
-</ul>
+  <h2>2. Guia rápido de eliminação de distratores</h2>
+  <table>
+    <caption class="sr-only">Perfil do distrator, gatilho de identificação e ação recomendada</caption>
+    <thead><tr><th scope="col">Perfil do distrator</th><th scope="col">Gatilho de identificação</th><th scope="col">Ação recomendada</th></tr></thead>
+    <tbody>
+      <tr><td><strong>A falsa verdade (extrapolação)</strong></td><td>Afirmação perfeita na teoria, mas sem amparo no texto-suporte.</td><td>Volte ao comando da questão e verifique o texto. Se a resposta depender de contexto, desconfie da opção “perfeita”.</td></tr>
+      <tr><td><strong>O inversor de causa e efeito</strong></td><td>Inverte a relação de causalidade (ex.: diz que a temperatura subiu por causa da pressão).</td><td>Escreva no rascunho: [CAUSA] → [EFEITO] e compare com a alternativa.</td></tr>
+      <tr><td><strong>O generalista absoluto</strong></td><td>Uso de palavras restritivas: "sempre", "nunca", "exclusivamente", "único".</td><td>Desconfie imediatamente. Fenômenos biológicos e físicos raramente são absolutos.</td></tr>
+    </tbody>
+  </table>
 
-<h3><span class="tag fis">Matemática</span></h3>
-<ul class="cb">
-  <li><span class="box"></span><span><strong>Razão, proporção e porcentagem:</strong> regra de três, acréscimos e descontos, juros simples e compostos.</span></li>
-  <li><span class="box"></span><span><strong>Funções:</strong> leitura e interpretação de gráficos, função afim (linear) e função quadrática; máximos e mínimos.</span></li>
-  <li><span class="box"></span><span><strong>Geometria:</strong> áreas e volumes de prismas, cilindros e cones; teorema de Pitágoras e semelhança de triângulos.</span></li>
-  <li><span class="box"></span><span><strong>Estatística e probabilidade:</strong> média, mediana, moda, desvio padrão, tabelas e gráficos; probabilidade simples e condicional.</span></li>
-  <li><span class="box"></span><span><strong>Progressões e geometria analítica:</strong> PA e PG, plano cartesiano e distância entre pontos.</span></li>
-</ul>
+  <h2>3. Protocolo de execução da prova no 2º dia</h2>
+  <ol class="proto">
+    <li><strong>Passagem de olho estratégica (primeiros 10 min):</strong> folheie a prova de Ciências da Natureza. Classifique com uma letra ao lado do número: <strong>F</strong> (fácil), <strong>M</strong> (média) ou <strong>D</strong> (difícil).</li>
+    <li><strong>Garantia do TRI:</strong> resolva todas as questões marcadas com <strong>F</strong> e <strong>M</strong> primeiro. Deixe as mais extensas para o fim.</li>
+    <li><strong>Técnica de análise dimensional:</strong> esqueceu a fórmula? Analise as unidades no enunciado e nas opções. Isso reduz erros absurdos em Física e Química.</li>
+    <li><strong>Preenchimento do cartão-resposta:</strong> reserve os últimos 20 a 30 minutos exclusivamente para marcação do gabarito com calma.</li>
+  </ol>
 
-<h3><span class="tag fis">Matemática</span></h3>
-<ul class="cb">
-  <li><span class="box"></span><span><strong>Razão, proporção e porcentagem:</strong> regra de três, acréscimos e descontos, juros simples e compostos.</span></li>
-  <li><span class="box"></span><span><strong>Funções:</strong> leitura e interpretação de gráficos, função afim (linear) e função quadrática; máximos e mínimos.</span></li>
-  <li><span class="box"></span><span><strong>Geometria:</strong> áreas e volumes de prismas, cilindros e cones; teorema de Pitágoras e semelhança de triângulos.</span></li>
-  <li><span class="box"></span><span><strong>Estatística e probabilidade:</strong> média, mediana, moda, desvio padrão, tabelas e gráficos; probabilidade simples e condicional.</span></li>
-  <li><span class="box"></span><span><strong>Progressões e geometria analítica:</strong> PA e PG, plano cartesiano e distância entre pontos.</span></li>
-</ul>
+  <footer class="site-footer">
+    <div class="logos">
+      <img src="assets/biotech_edudesign.png" alt="Bio+Tech EduDesign">
+      <img src="assets/pre_enem.png" alt="Pré-Enem Digit@l MT">
+      <img src="assets/gov_mato_grosso.png" alt="Governo do Estado de Mato Grosso">
+    </div>
+    <p><strong>Projeto Pré-Enem Digit@l MT 2026 · Aulão em Juscimeira-MT | Material de apoio · Dados de frequência: série histórica INEP/ENEM 2014–2024</strong></p>
+    <p>Desenvolvido por <a href="https://github.com/bio-tech-edu">Bio+Tech EduDesign</a> · Apoio institucional <strong>Governo do Estado de Mato Grosso</strong></p>
+  </footer>
 
-<h2>2. Guia rápido de eliminação de distratores</h2>
-<table>
-  <caption class="sr-only">Perfil do distrator, gatilho de identificação e ação recomendada</caption>
-  <caption class="sr-only">Perfil do distrator, gatilho de identificação e ação recomendada</caption>
-  <caption class="sr-only">Perfil do distrator, gatilho de identificação e ação recomendada</caption>
-  <thead><tr><th scope="col">Perfil do distrator</th><th scope="col">Gatilho de identificação</th><th scope="col">Ação recomendada</th></tr></thead>
-  <tbody>
-    <tr><td><strong>A falsa verdade (extrapolação)</strong></td><td>Afirmação perfeita na teoria, mas sem amparo no texto-suporte.</td><td>Volte ao comando da questão e verifique o texto. Se o texto não cita, elimine.</td></tr>
-    <tr><td><strong>O inversor de causa e efeito</strong></td><td>Inverte a relação de causalidade (ex.: diz que a temperatura subiu por causa da pressão).</td><td>Escreva no rascunho: [CAUSA] → [EFEITO] e compare com o texto.</td></tr>
-    <tr><td><strong>O generalista absoluto</strong></td><td>Uso de palavras restritivas: "sempre", "nunca", "exclusivamente", "único".</td><td>Desconfie imediatamente. Fenômenos biológicos e químicos raramente são absolutos.</td></tr>
-  </tbody>
-</table>
-
-<h2>3. Protocolo de execução da prova no 2º dia</h2>
-<ol class="proto">
-  <li><strong>Passagem de olho estratégica (primeiros 10 min):</strong> folheie a prova de Ciências da Natureza. Classifique com uma letra ao lado do número: <strong>F</strong> (fácil), <strong>M</strong> (média) e <strong>D</strong> (difícil).</li>
-  <li><strong>Garantia do TRI:</strong> resolva todas as questões marcadas com <strong>F</strong> e <strong>M</strong> primeiro. Deixe as questões com cálculos extensos de físico-química ou circuitos complexos para a etapa final.</li>
-  <li><strong>Técnica de análise dimensional:</strong> esqueceu a fórmula? Analise as unidades no enunciado e nas opções. Se a resposta é em watts (W = J/s), divida o valor dado em joules pelo tempo em segundos.</li>
-  <li><strong>Preenchimento do cartão-resposta:</strong> reserve os últimos 20 a 30 minutos exclusivamente para a marcação do gabarito com calma.</li>
-</ol>
-
-<!-- FOOTER -->
-<footer class="site-footer">
-  <div class="logos">
-    <img src="assets/biotech_edudesign.png" alt="Bio+Tech EduDesign">
-    <img src="assets/pre_enem.png" alt="Pré-Enem Digit@l MT">
-    <img src="assets/gov_mato_grosso.png" alt="Governo do Estado de Mato Grosso">
-  </div>
-  <p><strong>Projeto Pré-Enem Digit@l MT 2026 · Aulão em Juscimeira-MT | Material de apoio · Dados de frequência: série histórica INEP/ENEM 2014–2024</strong></p>
-  <p>Desenvolvido por <a href="https://github.com/bio-tech-edu">Bio+Tech EduDesign</a> · Apoio institucional <strong>Governo do Estado de Mato Grosso</strong></p>
-</footer>
-
-<script>
-/* ================= CHECKLIST INTERATIVO =================
-   Converte as caixas visuais em checkboxes reais e guarda o progresso no
-   localStorage do próprio aparelho do estudante (nada é enviado a servidor).
-   A impressão continua idêntica: a barra de progresso e os botões são ocultados.
-*/
-(function checklistInterativo(){
-  var uls=document.querySelectorAll('ul.cb');
-  if(!uls.length)return;
-  var CHAVE='enem2026-'+(document.body.getAttribute('data-checklist')||'checklist')+'-v1';
-  var itens=[],salvo={};
-  try{salvo=JSON.parse(localStorage.getItem(CHAVE)||'{}');}catch(e){salvo={};}
-
-  Array.prototype.forEach.call(uls,function(ul,ui){
-    Array.prototype.forEach.call(ul.querySelectorAll('li'),function(li,li_i){
-      var span=li.querySelector('.box');
-      if(!span)return;
-      var cb=document.createElement('input');
-      cb.type='checkbox';
-      cb.className='box';
-      cb.id='ck-'+ui+'-'+li_i;
-      cb.setAttribute('aria-label',(li.textContent||'').trim().slice(0,120));
-      span.parentNode.replaceChild(cb,span);
-      itens.push(cb);
-      cb.addEventListener('change',function(){
-        li.classList.toggle('revisado',cb.checked);
-        atualizar();
-      });
-    });
-  });
-
-  var barra=document.getElementById('progressFill');
-  var texto=document.getElementById('progressTexto');
-  var caixa=document.getElementById('progresso');
-  var limpar=document.getElementById('limpar');
-  if(caixa)caixa.hidden=false;
-
-  function atualizar(){
-    var feitos=0,dados={};
-    itens.forEach(function(cb){if(cb.checked)feitos++;dados[cb.id]=cb.checked;});
-    if(barra)barra.style.width=(itens.length?Math.round(feitos*100/itens.length):0)+'%';
-    if(texto)texto.textContent=feitos+' de '+itens.length+' itens revisados'+(feitos===itens.length&&itens.length?' — checklist completo!':'');
-    try{localStorage.setItem(CHAVE,JSON.stringify(dados));}catch(e){}
-  }
-
-  itens.forEach(function(cb){
-    if(salvo[cb.id]){
-      cb.checked=true;
-      var li=cb.closest('li');
-      if(li)li.classList.add('revisado');
-    }
-  });
-  if(limpar)limpar.onclick=function(){
-    itens.forEach(function(cb){cb.checked=false;var li=cb.closest('li');if(li)li.classList.remove('revisado');});
-    try{localStorage.removeItem(CHAVE);}catch(e){}
-    atualizar();
-  };
-  atualizar();
-})();
-</script>
-
-
-<script>
-/* ================= CHECKLIST INTERATIVO =================
-   Converte as caixas visuais em checkboxes reais e guarda o progresso no
-   localStorage do próprio aparelho do estudante (nada é enviado a servidor).
-   A impressão continua idêntica: a barra de progresso e os botões são ocultados.
-*/
-(function checklistInterativo(){
-  var uls=document.querySelectorAll('ul.cb');
-  if(!uls.length)return;
-  var CHAVE='enem2026-'+(document.body.getAttribute('data-checklist')||'checklist')+'-v1';
-  var itens=[],salvo={};
-  try{salvo=JSON.parse(localStorage.getItem(CHAVE)||'{}');}catch(e){salvo={};}
-
-  Array.prototype.forEach.call(uls,function(ul,ui){
-    Array.prototype.forEach.call(ul.querySelectorAll('li'),function(li,li_i){
-      var span=li.querySelector('.box');
-      if(!span)return;
-      var cb=document.createElement('input');
-      cb.type='checkbox';
-      cb.className='box';
-      cb.id='ck-'+ui+'-'+li_i;
-      cb.setAttribute('aria-label',(li.textContent||'').trim().slice(0,120));
-      span.parentNode.replaceChild(cb,span);
-      itens.push(cb);
-      cb.addEventListener('change',function(){
-        li.classList.toggle('revisado',cb.checked);
-        atualizar();
-      });
-    });
-  });
-
-  var barra=document.getElementById('progressFill');
-  var texto=document.getElementById('progressTexto');
-  var caixa=document.getElementById('progresso');
-  var limpar=document.getElementById('limpar');
-  if(caixa)caixa.hidden=false;
-
-  function atualizar(){
-    var feitos=0,dados={};
-    itens.forEach(function(cb){if(cb.checked)feitos++;dados[cb.id]=cb.checked;});
-    if(barra)barra.style.width=(itens.length?Math.round(feitos*100/itens.length):0)+'%';
-    if(texto)texto.textContent=feitos+' de '+itens.length+' itens revisados'+(feitos===itens.length&&itens.length?' — checklist completo!':'');
-    try{localStorage.setItem(CHAVE,JSON.stringify(dados));}catch(e){}
-  }
-
-  itens.forEach(function(cb){
-    if(salvo[cb.id]){
-      cb.checked=true;
-      var li=cb.closest('li');
-      if(li)li.classList.add('revisado');
-    }
-  });
-  if(limpar)limpar.onclick=function(){
-    itens.forEach(function(cb){cb.checked=false;var li=cb.closest('li');if(li)li.classList.remove('revisado');});
-    try{localStorage.removeItem(CHAVE);}catch(e){}
-    atualizar();
-  };
-  atualizar();
-})();
-</script>
-
-
-<script>
-/* ================= CHECKLIST INTERATIVO =================
-   Converte as caixas visuais em checkboxes reais e guarda o progresso no
-   localStorage do próprio aparelho do estudante (nada é enviado a servidor).
-   A impressão continua idêntica: a barra de progresso e os botões são ocultados.
-*/
-(function checklistInterativo(){
-  var uls=document.querySelectorAll('ul.cb');
-  if(!uls.length)return;
-  var CHAVE='enem2026-'+(document.body.getAttribute('data-checklist')||'checklist')+'-v1';
-  var itens=[],salvo={};
-  try{salvo=JSON.parse(localStorage.getItem(CHAVE)||'{}');}catch(e){salvo={};}
-
-  Array.prototype.forEach.call(uls,function(ul,ui){
-    Array.prototype.forEach.call(ul.querySelectorAll('li'),function(li,li_i){
-      var span=li.querySelector('.box');
-      if(!span)return;
-      var cb=document.createElement('input');
-      cb.type='checkbox';
-      cb.className='box';
-      cb.id='ck-'+ui+'-'+li_i;
-      cb.setAttribute('aria-label',(li.textContent||'').trim().slice(0,120));
-      span.parentNode.replaceChild(cb,span);
-      itens.push(cb);
-      cb.addEventListener('change',function(){
-        li.classList.toggle('revisado',cb.checked);
-        atualizar();
-      });
-    });
-  });
-
-  var barra=document.getElementById('progressFill');
-  var texto=document.getElementById('progressTexto');
-  var caixa=document.getElementById('progresso');
-  var limpar=document.getElementById('limpar');
-  if(caixa)caixa.hidden=false;
-
-  function atualizar(){
-    var feitos=0,dados={};
-    itens.forEach(function(cb){if(cb.checked)feitos++;dados[cb.id]=cb.checked;});
-    if(barra)barra.style.width=(itens.length?Math.round(feitos*100/itens.length):0)+'%';
-    if(texto)texto.textContent=feitos+' de '+itens.length+' itens revisados'+(feitos===itens.length&&itens.length?' — checklist completo!':'');
-    try{localStorage.setItem(CHAVE,JSON.stringify(dados));}catch(e){}
-  }
-
-  itens.forEach(function(cb){
-    if(salvo[cb.id]){
-      cb.checked=true;
-      var li=cb.closest('li');
-      if(li)li.classList.add('revisado');
-    }
-  });
-  if(limpar)limpar.onclick=function(){
-    itens.forEach(function(cb){cb.checked=false;var li=cb.closest('li');if(li)li.classList.remove('revisado');});
-    try{localStorage.removeItem(CHAVE);}catch(e){}
-    atualizar();
-  };
-  atualizar();
-})();
-</script>
-
-
+  <script src="assets/js/checklist.js" defer></script>
 </body>
 </html>

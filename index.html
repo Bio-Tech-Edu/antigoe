@@ -1,484 +1,305 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aulão Pré-ENEM Digit@l MT — Raio-X dos dois dias do ENEM</title>
-<meta name="description" content="Portal do aulão Pré-ENEM Digit@l MT em Juscimeira-MT: painéis interativos do 1º dia (Linguagens, Humanas e Redação) e do 2º dia (Ciências da Natureza) do ENEM.">
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-<script src="https://unpkg.com/lucide@0.462.0/dist/umd/lucide.min.js"></script>
-<script>
-tailwind.config = {
-  darkMode: 'class',
-  theme: { extend: {
-    colors: {
-      ink:'#12181D', paper:'#F1F3F1',
-      bio:'#2F7A56', qui:'#7C57C9', fis:'#3159C9',
-      accent:'#B97116', accentglow:'#E0972E',
-      easy:'#2F7A56', mid:'#B97116', hard:'#8C3B3B'
-    },
-    fontFamily: {
-      display: ['"Space Grotesk"','system-ui','sans-serif'],
-      sans: ['"IBM Plex Sans"','system-ui','sans-serif'],
-      mono: ['"IBM Plex Mono"','ui-monospace','monospace']
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aulão Pré-ENEM Digit@l MT — Raio-X dos dois dias do ENEM</title>
+  <meta name="description" content="Portal do aulão Pré-ENEM Digit@l MT em Juscimeira-MT: painéis interativos do 1º dia (Linguagens, Humanas e Redação) e do 2º dia (Ciências da Natureza) do ENEM.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://unpkg.com/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: {
+        colors: {
+          ink:'#12181D', paper:'#F1F3F1',
+          bio:'#2F7A56', qui:'#7C57C9', fis:'#3159C9',
+          accent:'#B97116', accentglow:'#E0972E',
+          easy:'#2F7A56', mid:'#B97116', hard:'#8C3B3B'
+        },
+        fontFamily: {
+          display: ['"Space Grotesk"','system-ui','sans-serif'],
+          sans: ['"IBM Plex Sans"','system-ui','sans-serif'],
+          mono: ['"IBM Plex Mono"','ui-monospace','monospace']
+        }
+      }}
     }
-  }}
-}
-</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --paper:#F1F3F1; --paper-raised:#FFFFFF; --ink:#12181D; --ink-soft:#4B565C; --line:#D7DEDA;
-    --accent:#B97116; --accent-glow:#E0972E;
-    --bio:#2F7A56; --qui:#7C57C9; --fis:#3159C9;
-    --easy:#2F7A56; --mid:#B97116; --hard:#8C3B3B;
-    --focus:#3159C9;
-  }
-  html.dark{
-    --paper:#0B1013; --paper-raised:#12181C; --ink:#ECEEEE; --ink-soft:#A8B1B4; --line:#263130;
-    --accent:#E0972E; --accent-glow:#F0AD4E;
-    --bio:#49B084; --qui:#A88CE8; --fis:#7095F0;
-    --easy:#49B084; --mid:#E0972E; --hard:#C77C79;
-    --focus:#7095F0;
-  }
-  body{font-family:'IBM Plex Sans',system-ui,sans-serif;background:var(--paper);color:var(--ink)}
-  .font-display{font-family:'Space Grotesk',system-ui,sans-serif}
-  .font-mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
-  .scanfield{
-    background-color:#0B1013;
-    background-image:radial-gradient(circle at 1px 1px, rgba(255,255,255,.08) 1px, transparent 0);
-    background-size:24px 24px;
-  }
-  .panel{background:var(--paper-raised);border:1px solid var(--line);border-radius:12px}
-  .tab-strip{border-bottom:1px solid var(--line)}
-  .tab-btn{position:relative;padding:.85rem .25rem;font-size:.9rem;font-weight:600;color:var(--ink-soft);white-space:nowrap;background:none;border:none;cursor:pointer}
-  .tab-btn::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:3px;background:transparent;border-radius:2px 2px 0 0}
-  .tab-btn:hover{color:var(--ink)}
-  .tab-btn[aria-selected="true"]{color:var(--ink)}
-  .tab-btn[aria-selected="true"]::after{background:var(--accent-glow)}
-  .fade-in{animation:fadeIn .3s ease both}
-  .avatar-photo{width:84px;height:84px;border-radius:50%;object-fit:cover;border:2px solid var(--line)}
-  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-  a:focus-visible, button:focus-visible{outline:2.5px solid var(--focus);outline-offset:2px}
-  ::-webkit-scrollbar{height:8px;width:8px}::-webkit-scrollbar-thumb{background:#94a3b8;border-radius:8px}
-  @media (prefers-reduced-motion: reduce){.fade-in{animation:none}}
-  .skip-link{position:absolute;left:-999px;top:0;background:#fff;color:#000;padding:.6rem 1rem;z-index:100;border-radius:0 0 8px 0}
-  .skip-link:focus{left:0}
-  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-  .chip{display:inline-block;font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:9999px;border:1px solid var(--line);background:var(--paper);color:var(--ink-soft)}
-  .site-footer{padding:2rem 1rem 3rem;text-align:center;border-top:1px solid var(--line);margin-top:3rem;color:var(--ink-soft);font-size:.85rem}
-  .site-footer .logos{display:flex;justify-content:center;align-items:center;gap:1.5rem;margin-bottom:1rem;flex-wrap:wrap}
-  .site-footer .logos img{height:50px;object-fit:contain;opacity:.92;background:rgba(255,255,255,.92);padding:6px 10px;border-radius:8px}
-  .site-footer a{color:var(--fis);text-decoration:none}
-  .site-footer a:hover{text-decoration:underline}
-  
-  /* ================= GALERIA DE FOTOS (grade responsiva + lightbox) ================= */
-  .galeria-empty{border:2px dashed var(--line);border-radius:12px;padding:3.5rem 1.5rem;text-align:center;color:var(--ink-soft)}
-  .sg-head{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.25rem}
-  .sg-count{font-size:.72rem;font-weight:600;padding:.3rem .75rem;border-radius:9999px;border:1px solid var(--line);background:var(--paper);color:var(--ink-soft);white-space:nowrap}
-  .sg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:.85rem}
-  .sg-item{position:relative;display:block;margin:0;padding:0;width:100%;aspect-ratio:4/3;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--paper);cursor:zoom-in}
-  .sg-item img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .35s ease}
-  .sg-item:hover img,.sg-item:focus-visible img{transform:scale(1.05)}
-  .sg-veil{position:absolute;inset:0;background:linear-gradient(to top,rgba(11,16,19,.6),rgba(11,16,19,0) 58%);opacity:0;transition:opacity .3s ease;pointer-events:none}
-  .sg-item:hover .sg-veil,.sg-item:focus-visible .sg-veil{opacity:1}
-  .sg-zoom{position:absolute;right:.5rem;bottom:.5rem;width:30px;height:30px;border-radius:9999px;background:rgba(11,16,19,.62);color:#fff;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s ease}
-  .sg-item:hover .sg-zoom,.sg-item:focus-visible .sg-zoom{opacity:1}
-  @media (max-width:640px){.sg-grid{grid-template-columns:repeat(2,1fr);gap:.5rem}.sg-item{border-radius:8px}}
-  @media (prefers-reduced-motion:reduce){.sg-item img{transition:none}.sg-item:hover img{transform:none}.sg-veil,.sg-zoom{transition:none}}
-  .sg-lightbox{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;background:rgba(6,9,11,.93);padding:1rem}
-  .sg-lightbox.is-open{display:flex}
-  .sg-lb-figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:.7rem;max-width:100%}
-  .sg-lb-img{max-width:min(96vw,var(--sg-native-w,96vw));max-height:min(80vh,var(--sg-native-h,80vh));width:auto;height:auto;object-fit:contain;border-radius:10px;box-shadow:0 18px 50px rgba(0,0,0,.55)}
-  .sg-lb-cap{color:#E9EDEF;font-size:.85rem;line-height:1.45;text-align:center;max-width:44rem;margin:0}
-  .sg-lb-idx{color:#9AA6AC;font-size:.75rem;font-family:'IBM Plex Mono',ui-monospace,monospace;margin:0}
-  .sg-lb-btn,.sg-lb-close{position:absolute;display:flex;align-items:center;justify-content:center;border-radius:9999px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12);color:#fff;cursor:pointer}
-  .sg-lb-btn:hover,.sg-lb-close:hover{background:rgba(255,255,255,.26)}
-  .sg-lb-btn{top:50%;transform:translateY(-50%);width:46px;height:46px}
-  .sg-lb-prev{left:1rem}.sg-lb-next{right:1rem}
-  .sg-lb-close{top:1rem;right:1rem;width:44px;height:44px}
-  body.sg-lock{overflow:hidden}
-
-    /* ================= CONTADOR DE DIAS PARA AS PROVAS ================= */
-  .cd-strip{display:flex;align-items:center;gap:.5rem;margin-top:.85rem;padding:.5rem .75rem;border-radius:8px;border:1px dashed var(--line);background:var(--paper);font-size:.8rem;font-weight:600;color:var(--ink)}
-  .cd-strip .cd-texto{color:var(--cd,var(--ink))}
-  .cd-strip .cd-data{margin-left:auto;font-size:.72rem;font-weight:500;color:var(--ink-soft);white-space:nowrap}
-  .cd-strip.is-hoje{border-style:solid;border-color:var(--cd)}
-  .cd-strip.is-passado{opacity:.7}
-  .cd-strip.is-passado .cd-texto{color:var(--ink-soft)}
-  @media (max-width:420px){.cd-strip{flex-wrap:wrap}.cd-strip .cd-data{margin-left:0;width:100%}}
-
-</style>
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <style>
+    /* Legacy styles retained for compatibility during migration. */
+    body{font-family:'IBM Plex Sans',system-ui,sans-serif;background:var(--paper);color:var(--ink)}
+    .font-display{font-family:'Space Grotesk',system-ui,sans-serif}
+    .font-mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+    .scanfield{background-color:#0B1013;background-image:radial-gradient(circle at 1px 1px, rgba(255,255,255,.08) 1px, transparent 0);background-size:24px 24px}
+    .panel{background:var(--paper-raised);border:1px solid var(--line);border-radius:12px}
+    .tab-strip{border-bottom:1px solid var(--line)}
+    .tab-btn{position:relative;padding:.85rem .25rem;font-size:.9rem;font-weight:600;color:var(--ink-soft);white-space:nowrap;background:none;border:none;cursor:pointer}
+    .tab-btn::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:3px;background:transparent;border-radius:2px 2px 0 0}
+    .tab-btn:hover{color:var(--ink)}
+    .tab-btn[aria-selected="true"]{color:var(--ink)}
+    .tab-btn[aria-selected="true"]::after{background:var(--accent-glow)}
+    .fade-in{animation:fadeIn .3s ease both}
+    .avatar-photo{width:84px;height:84px;border-radius:50%;object-fit:cover;border:2px solid var(--line)}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+    a:focus-visible, button:focus-visible{outline:2.5px solid var(--focus);outline-offset:2px}
+    ::-webkit-scrollbar{height:8px;width:8px}::-webkit-scrollbar-thumb{background:#94a3b8;border-radius:8px}
+    @media (prefers-reduced-motion: reduce){.fade-in{animation:none}}
+    .skip-link{position:absolute;left:-999px;top:0;background:#fff;color:#000;padding:.6rem 1rem;z-index:100;border-radius:0 0 8px 0}
+    .skip-link:focus{left:0}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .chip{display:inline-block;font-size:.72rem;font-weight:600;padding:.2rem .6rem;border-radius:9999px;border:1px solid var(--line);background:var(--paper);color:var(--ink-soft)}
+    .site-footer{padding:2rem 1rem 3rem;text-align:center;border-top:1px solid var(--line);margin-top:3rem;color:var(--ink-soft);font-size:.85rem}
+    .site-footer .logos{display:flex;justify-content:center;align-items:center;gap:1.5rem;margin-bottom:1rem;flex-wrap:wrap}
+    .site-footer .logos img{height:50px;object-fit:contain;opacity:.92;background:rgba(255,255,255,.92);padding:6px 10px;border-radius:8px}
+    .site-footer a{color:var(--fis);text-decoration:none}
+    .site-footer a:hover{text-decoration:underline}
+    .galeria-empty{border:2px dashed var(--line);border-radius:12px;padding:3.5rem 1.5rem;text-align:center;color:var(--ink-soft)}
+    .sg-head{display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.25rem}
+    .sg-count{font-size:.72rem;font-weight:600;padding:.3rem .75rem;border-radius:9999px;border:1px solid var(--line);background:var(--paper);color:var(--ink-soft);white-space:nowrap}
+    .sg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:.85rem}
+    .sg-item{position:relative;display:block;margin:0;padding:0;width:100%;aspect-ratio:4/3;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--paper);cursor:zoom-in}
+    .sg-item img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .35s ease}
+    .sg-item:hover img,.sg-item:focus-visible img{transform:scale(1.05)}
+    .sg-veil{position:absolute;inset:0;background:linear-gradient(to top,rgba(11,16,19,.6),rgba(11,16,19,0) 58%);opacity:0;transition:opacity .3s ease;pointer-events:none}
+    .sg-item:hover .sg-veil,.sg-item:focus-visible .sg-veil{opacity:1}
+    .sg-zoom{position:absolute;right:.5rem;bottom:.5rem;width:30px;height:30px;border-radius:9999px;background:rgba(11,16,19,.62);color:#fff;display:flex;align-items:center;justify-content:center}
+    .sg-item:hover .sg-zoom,.sg-item:focus-visible .sg-zoom{opacity:1}
+    @media (max-width:640px){.sg-grid{grid-template-columns:repeat(2,1fr);gap:.5rem}.sg-item{border-radius:8px}}
+    @media (prefers-reduced-motion:reduce){.sg-item img{transition:none}.sg-item:hover img{transform:none}.sg-veil,.sg-zoom{transition:none}}
+    .sg-lightbox{position:fixed;inset:0;z-index:90;display:none;align-items:center;justify-content:center;background:rgba(6,9,11,.93);padding:1rem}
+    .sg-lightbox.is-open{display:flex}
+    .sg-lb-figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:.7rem;max-width:100%}
+    .sg-lb-img{max-width:min(96vw,var(--sg-native-w,96vw));max-height:min(80vh,var(--sg-native-h,80vh));width:auto;height:auto;object-fit:contain;border-radius:10px;box-shadow:0 18px 50px rgba(0,0,0,.45)}
+    .sg-lb-cap{color:#E9EDEF;font-size:.85rem;line-height:1.45;text-align:center;max-width:44rem;margin:0}
+    .sg-lb-idx{color:#9AA6AC;font-size:.75rem;font-family:'IBM Plex Mono',ui-monospace,monospace;margin:0}
+    .sg-lb-btn,.sg-lb-close{position:absolute;display:flex;align-items:center;justify-content:center;border-radius:9999px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12);color:#fff}
+    .sg-lb-btn:hover,.sg-lb-close:hover{background:rgba(255,255,255,.26)}
+    .sg-lb-btn{top:50%;transform:translateY(-50%);width:46px;height:46px}
+    .sg-lb-prev{left:1rem}.sg-lb-next{right:1rem}
+    .sg-lb-close{top:1rem;right:1rem;width:44px;height:44px}
+    body.sg-lock{overflow:hidden}
+    .cd-strip{display:flex;align-items:center;gap:.5rem;margin-top:.85rem;padding:.5rem .75rem;border-radius:8px;border:1px dashed var(--line);background:var(--paper);font-size:.8rem;font-weight:600}
+    .cd-strip .cd-texto{color:var(--cd,var(--ink))}
+    .cd-strip .cd-data{margin-left:auto;font-size:.72rem;font-weight:500;color:var(--ink-soft);white-space:nowrap}
+    .cd-strip.is-hoje{border-style:solid;border-color:var(--cd)}
+    .cd-strip.is-passado{opacity:.7}
+    .cd-strip.is-passado .cd-texto{color:var(--ink-soft)}
+    @media (max-width:420px){.cd-strip{flex-wrap:wrap}.cd-strip .cd-data{margin-left:0;width:100%}}
+  </style>
 </head>
 <body class="min-h-screen" style="background:var(--paper);color:var(--ink)">
-<a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
-
-<!-- ============ HEADER ============ -->
-<header class="scanfield text-white">
-  <div class="max-w-6xl mx-auto px-5 pt-10 pb-8 md:pt-14 md:pb-10">
-    <div class="flex flex-wrap items-start justify-between gap-6">
-      <div class="max-w-2xl">
-        <p class="text-xs font-semibold uppercase tracking-widest text-white/55 mb-3">Projeto Pré-ENEM Digit@l MT · SEDUC-MT · Aulão em Juscimeira-MT</p>
-        <h1 class="font-display text-3xl md:text-5xl font-semibold tracking-tight leading-[1.08]">Raio-X do ENEM: os dois dias da prova decodificados</h1>
-        <p class="mt-4 text-white/75 text-base leading-relaxed max-w-xl">Dois painéis interativos construídos sobre a série histórica do INEP: o que mais cai, como a TRI e as competências da redação medem seu desempenho e onde concentrar a energia na reta final.</p>
+  <a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
+  <header class="scanfield text-white">
+    <div class="max-w-6xl mx-auto px-5 pt-10 pb-8 md:pt-14 md:pb-10">
+      <div class="flex flex-wrap items-start justify-between gap-6">
+        <div class="max-w-2xl">
+          <p class="text-xs font-semibold uppercase tracking-widest text-white/55 mb-3">Projeto Pré-ENEM Digit@l MT · SEDUC-MT · Aulão em Juscimeira-MT</p>
+          <h1 class="font-display text-3xl md:text-5xl font-semibold tracking-tight leading-[1.08]">Raio-X do ENEM: os dois dias da prova decodificados</h1>
+          <p class="mt-4 text-white/75 text-base leading-relaxed max-w-xl">Dois painéis interativos construídos sobre a série histórica do INEP: o que mais cai, como a TRI e as competências da redação se comportam e como preparar uma revisão estratégica de alto impacto.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" id="darkToggle" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg px-3 py-2 text-sm font-medium transition" aria-pressed="false" data-theme-toggle>
+            <i data-lucide="moon" class="w-4 h-4" aria-hidden="true"></i><span class="hidden sm:inline">Tema</span>
+          </button>
+        </div>
       </div>
-      <div class="flex items-center gap-2">
-        <button id="darkToggle" aria-pressed="false" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg px-3 py-2 text-sm font-medium transition">
-          <i data-lucide="moon" class="w-4 h-4" aria-hidden="true"></i><span class="hidden sm:inline">Tema</span>
-        </button>
-      </div>
+      <dl class="mt-9 grid grid-cols-2 md:grid-cols-4 border-t border-white/15">
+        <div class="border-r border-white/15 py-4 pr-4"><dt class="text-xs text-white/55">Painéis interativos</dt><dd class="font-mono text-2xl mt-1">2</dd></div>
+        <div class="border-r border-white/15 py-4 px-4"><dt class="text-xs text-white/55">Questões objetivas + redação</dt><dd class="font-mono text-2xl mt-1">180 + 1</dd></div>
+        <div class="md:border-r border-white/15 py-4 px-4"><dt class="text-xs text-white/55">Série histórica analisada</dt><dd class="font-mono text-2xl mt-1">2014–24</dd></div>
+        <div class="py-4 pl-4 md:pl-4"><dt class="text-xs text-white/55">Modelo de avaliação</dt><dd class="font-mono text-2xl mt-1">TRI + 5C</dd></div>
+      </dl>
     </div>
-    <dl class="mt-9 grid grid-cols-2 md:grid-cols-4 border-t border-white/15">
-      <div class="border-r border-white/15 py-4 pr-4"><dt class="text-xs text-white/55">Painéis interativos</dt><dd class="font-mono text-2xl mt-1">2</dd></div>
-      <div class="border-r border-white/15 py-4 px-4"><dt class="text-xs text-white/55">Questões objetivas + redação</dt><dd class="font-mono text-2xl mt-1">180 + 1</dd></div>
-      <div class="md:border-r border-white/15 py-4 px-4"><dt class="text-xs text-white/55">Série histórica analisada</dt><dd class="font-mono text-2xl mt-1">2014–24</dd></div>
-      <div class="py-4 pl-4 md:pl-4"><dt class="text-xs text-white/55">Modelo de avaliação</dt><dd class="font-mono text-2xl mt-1">TRI + 5C</dd></div>
-    </dl>
-  </div>
-</header>
+  </header>
 
-<main id="conteudo" class="max-w-6xl mx-auto px-5 py-8 space-y-6">
+  <main id="conteudo" class="max-w-6xl mx-auto px-5 py-8 space-y-6">
+    <div class="grid md:grid-cols-2 gap-5">
+      <article class="panel p-6 flex flex-col" style="border-top:4px solid var(--accent)">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-semibold uppercase tracking-wide" style="color:var(--accent)">1º dia do ENEM</span>
+          <i data-lucide="pen-line" class="w-5 h-5" style="color:var(--accent)" aria-hidden="true"></i>
+        </div>
+        <h2 class="font-display text-2xl font-semibold mt-2">Linguagens, Humanas e Redação</h2>
+        <div class="cd-strip" data-date="2026-11-08" data-rotulo="1º dia" style="--cd:var(--accent)" aria-live="polite">
+          <i data-lucide="calendar-clock" class="w-4 h-4 shrink-0" aria-hidden="true"></i>
+          <span class="cd-texto">Calculando…</span>
+          <span class="cd-data">8 de novembro de 2026</span>
+        </div>
+        <p class="text-sm mt-2 leading-relaxed" style="color:var(--ink-soft)">Dashboard analítico dos temas de redação (2015–2024): eixos temáticos recorrentes, componentes curriculares mais relevantes e estratégia de revisão para a prova do primeiro dia.</p>
+        <ul class="mt-4 space-y-2 text-sm flex-grow" style="color:var(--ink-soft)">
+          <li class="flex gap-2"><i data-lucide="bar-chart-3" class="w-4 h-4 mt-0.5 shrink-0" style="color:var(--accent)" aria-hidden="true"></i>Dashboard com frequência por eixo e por componente.</li>
+          <li class="flex gap-2"><i data-lucide="history" class="w-4 h-4 mt-0.5 shrink-0" style="color:var(--accent)" aria-hidden="true"></i>Linha do tempo completa das propostas 2015–2024.</li>
+          <li class="flex gap-2"><i data-lucide="book-open" class="w-4 h-4 mt-0.5 shrink-0" style="color:var(--accent)" aria-hidden="true"></i>Repertórios conceituais e agentes de intervenção.</li>
+          <li class="flex gap-2"><i data-lucide="zap" class="w-4 h-4 mt-0.5 shrink-0" style="color:var(--accent)" aria-hidden="true"></i>Predição de temas por análise de hiatos da série histórica.</li>
+        </ul>
+        <a href="primeiro-dia.html" class="mt-6 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg text-white text-sm font-semibold" style="background:var(--accent)">
+          <i data-lucide="arrow-right" class="w-4 h-4" aria-hidden="true"></i>Abrir painel do 1º dia
+        </a>
+      </article>
 
-  <div class="grid md:grid-cols-2 gap-5">
+      <article class="panel p-6 flex flex-col" style="border-top:4px solid var(--fis)">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-semibold uppercase tracking-wide" style="color:var(--fis)">2º dia do ENEM</span>
+          <i data-lucide="flask-conical" class="w-5 h-5" style="color:var(--fis)" aria-hidden="true"></i>
+        </div>
+        <h2 class="font-display text-2xl font-semibold mt-2">Ciências da Natureza e suas tecnologias</h2>
+        <div class="cd-strip" data-date="2026-11-15" data-rotulo="2º dia" style="--cd:var(--fis)" aria-live="polite">
+          <i data-lucide="calendar-clock" class="w-4 h-4 shrink-0" aria-hidden="true"></i>
+          <span class="cd-texto">Calculando…</span>
+          <span class="cd-data">15 de novembro de 2026</span>
+        </div>
+        <p class="text-sm mt-2 leading-relaxed" style="color:var(--ink-soft)">Painel de dados e estudo de caso integrado da área de Ciências da Natureza (Biologia, Química e Física) para decodificar o 2º dia do ENEM.</p>
+        <ul class="mt-4 space-y-2 text-sm flex-grow" style="color:var(--ink-soft)">
+          <li class="flex gap-2"><i data-lucide="flame" class="w-4 h-4 mt-0.5 shrink-0" style="color:var(--fis)" aria-hidden="true"></i>Mapa de calor temático por componente (2014–2024).</li>
+          <li class="flex gap-2"><i data-lucide="droplets" class="w-4 h-4 mt-0.5 shrink-0" style="color:var(--fis)" aria-hidden="true"></i>Estudo de caso integrado e análise de contexto.</li>
+          <li class="flex gap-2"><i data-lucide="users" class="w-4 h-4 mt-0.5 shrink-0" style="color:var(--fis)" aria-hidden="true"></i>Dinâmica Think-Pair-Share com gabarito comentado.</li>
+          <li class="flex gap-2"><i data-lucide="camera" class="w-4 h-4 mt-0.5 shrink-0" style="color:var(--fis)" aria-hidden="true"></i>Distratores, TRI e revisão estratégica.</li>
+        </ul>
+        <a href="segundo-dia.html" class="mt-6 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg text-white text-sm font-semibold" style="background:var(--fis)">
+          <i data-lucide="arrow-right" class="w-4 h-4" aria-hidden="true"></i>Abrir painel do 2º dia
+        </a>
+      </article>
+    </div>
 
-    <!-- CARD 1º DIA -->
-    <article class="panel p-6 flex flex-col" style="border-top:4px solid var(--accent)">
-      <div class="flex items-center justify-between">
-        <span class="text-xs font-semibold uppercase tracking-wide" style="color:var(--accent)">1º dia do ENEM</span>
-        <i data-lucide="pen-line" class="w-5 h-5" style="color:var(--accent)" aria-hidden="true"></i>
+    <section class="panel p-6" aria-labelledby="galeriaTitulo">
+      <div class="sg-head">
+        <div class="max-w-2xl">
+          <h2 id="galeriaTitulo" class="font-display text-xl font-semibold">Galeria de fotos do aulão</h2>
+          <p class="mt-2 text-sm leading-relaxed" style="color:var(--ink-soft)">Registro fotográfico do aulão em Juscimeira-MT (Projeto Pré-ENEM Digit@l MT): estudantes, professores e momentos da aula prática em Ciências da Natureza.</p>
+        </div>
+        <span class="sg-count" id="sgCount" aria-live="polite"></span>
       </div>
-      <h2 class="font-display text-2xl font-semibold mt-2">Linguagens, Humanas e Redação</h2>
-            <div class="cd-strip" data-date="2026-11-08" data-rotulo="1º dia" style="--cd:var(--accent)" aria-live="polite">
-        <i data-lucide="calendar-clock" class="w-4 h-4 shrink-0" aria-hidden="true"></i>
-        <span class="cd-texto">Calculando…</span>
-        <span class="cd-data">8 de novembro de 2026</span>
+      <div class="sg-grid" id="sgGrid" role="group" aria-label="Fotos do aulão em Juscimeira-MT"></div>
+      <div class="sg-lightbox" id="sgLightbox" role="dialog" aria-modal="true" aria-label="Visualização ampliada da foto">
+        <button type="button" class="sg-lb-close" id="sgClose" aria-label="Fechar visualização"><i data-lucide="x" class="w-5 h-5" aria-hidden="true"></i></button>
+        <button type="button" class="sg-lb-btn sg-lb-prev" id="sgPrev" aria-label="Foto anterior"><i data-lucide="chevron-left" class="w-5 h-5" aria-hidden="true"></i></button>
+        <figure class="sg-lb-figure">
+          <img class="sg-lb-img" id="sgImg" src="" alt="">
+          <figcaption class="sg-lb-cap" id="sgCap"></figcaption>
+          <p class="sg-lb-idx" id="sgIdx"></p>
+        </figure>
+        <button type="button" class="sg-lb-btn sg-lb-next" id="sgNext" aria-label="Próxima foto"><i data-lucide="chevron-right" class="w-5 h-5" aria-hidden="true"></i></button>
       </div>
-      <p class="text-sm mt-2 leading-relaxed" style="color:var(--ink-soft)">Dashboard analítico dos temas de redação (2015–2024): eixos temáticos recorrentes, componentes curriculares mais exigidos, repertórios socioculturais por tema e hipóteses para as próximas edições.</p>
-      <ul class="mt-4 space-y-2 text-sm flex-grow" style="color:var(--ink-soft)">
-        <li class="flex gap-2"><i data-lucide="bar-chart-3" class="w-4 h-4 mt-0.5 shrink-0" style="color:var(--accent)" aria-hidden="true"></i>Dashboard com frequência por eixo e por componente curricular</li>
-        <li class="flex gap-2"><i data-lucide="history" class="w-4 h-4 mt-0.5 shrink-0" style="color:var(--accent)" aria-hidden="true"></i>Linha do tempo completa das propostas 2015–2024</li>
-        <li class="flex gap-2"><i data-lucide="book-open" class="w-4 h-4 mt-0.5 shrink-0" style="color:var(--accent)" aria-hidden="true"></i>Repertórios conceituais e agentes de intervenção (Competência 5)</li>
-        <li class="flex gap-2"><i data-lucide="zap" class="w-4 h-4 mt-0.5 shrink-0" style="color:var(--accent)" aria-hidden="true"></i>Predição de temas por análise de hiatos da série histórica</li>
-      </ul>
-      <a href="primeiro-dia.html" class="mt-6 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg text-white text-sm font-semibold" style="background:var(--accent)">
-        <i data-lucide="arrow-right" class="w-4 h-4" aria-hidden="true"></i>Abrir painel do 1º dia
-      </a>
-    </article>
+    </section>
 
-    <!-- CARD 2º DIA -->
-    <article class="panel p-6 flex flex-col" style="border-top:4px solid var(--fis)">
-      <div class="flex items-center justify-between">
-        <span class="text-xs font-semibold uppercase tracking-wide" style="color:var(--fis)">2º dia do ENEM</span>
-        <i data-lucide="flask-conical" class="w-5 h-5" style="color:var(--fis)" aria-hidden="true"></i>
-      </div>
-      <h2 class="font-display text-2xl font-semibold mt-2">Ciências da Natureza e suas tecnologias</h2>
-            <div class="cd-strip" data-date="2026-11-15" data-rotulo="2º dia" style="--cd:var(--fis)" aria-live="polite">
-        <i data-lucide="calendar-clock" class="w-4 h-4 shrink-0" aria-hidden="true"></i>
-        <span class="cd-texto">Calculando…</span>
-        <span class="cd-data">15 de novembro de 2026</span>
-      </div>
-      <p class="text-sm mt-2 leading-relaxed" style="color:var(--ink-soft)">Painel de dados e estudo de caso integrado da área de Ciências da Natureza (Biologia, Química e Física) para decodificar o 2º dia: o que mais cai, o que garante nota na régua TRI e onde não vale a pena travar o tempo.</p>
-      <ul class="mt-4 space-y-2 text-sm flex-grow" style="color:var(--ink-soft)">
-        <li class="flex gap-2"><i data-lucide="flame" class="w-4 h-4 mt-0.5 shrink-0" style="color:var(--fis)" aria-hidden="true"></i>Mapa de calor temático por componente (2014–2024)</li>
-        <li class="flex gap-2"><i data-lucide="droplets" class="w-4 h-4 mt-0.5 shrink-0" style="color:var(--fis)" aria-hidden="true"></i>Estudo de caso integrado: Estação de Tratamento de Água</li>
-        <li class="flex gap-2"><i data-lucide="users" class="w-4 h-4 mt-0.5 shrink-0" style="color:var(--fis)" aria-hidden="true"></i>Dinâmica Think-Pair-Share com gabarito comentado</li>
-        <li class="flex gap-2"><i data-lucide="camera" class="w-4 h-4 mt-0.5 shrink-0" style="color:var(--fis)" aria-hidden="true"></i>Distratores, TRI</li>
-      </ul>
-      <a href="segundo-dia.html" class="mt-6 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg text-white text-sm font-semibold" style="background:var(--fis)">
-        <i data-lucide="arrow-right" class="w-4 h-4" aria-hidden="true"></i>Abrir painel do 2º dia
-      </a>
-    </article>
-  </div>
-
-  <!-- Sobre o Pré-ENEM Digit@l MT -->
-<section id="tab-geral" class="tab-panel fade-in space-y-6" role="tabpanel" aria-labelledby="tabbtn-geral" tabindex="0">
-  <div class="panel p-6">
-    <h2 class="font-display text-xl font-semibold">Sobre o Pré-ENEM Digit@l MT</h2>
-    <div class="flex flex-col sm:flex-row gap-5">
-      <img src="assets/pre_enem_avatar.png" alt="Pré-Enem Digit@l MT" class="avatar-photo shrink-0">
+    <div class="panel p-6 flex flex-wrap items-center justify-between gap-4">
       <div>
-        <p class="mt-3 text-sm leading-relaxed" style="color:var(--ink-soft)">O Pré-ENEM Digit@l é um serviço da Secretaria de Estado de Educação de Mato Grosso (SEDUC-MT): um curso preparatório gratuito para o ENEM oferecido a estudantes da rede pública, com o objetivo de reforçar a formação e o desenvolvimento das competências e habilidades cobradas na prova. Ao longo de suas edições, o programa já combinou aulas presenciais em polos regionais — como Cuiabá, Rondonópolis, Tangará da Serra e Sinop —, transmissão por TV e conteúdo digital, com equipes de professores da rede pública e privada atuando voluntariamente. O modelo já foi tema de relato de experiência no Seminário de Educação de Mato Grosso — SEMIEDU 2024 — sob o título <em>"Pré-Enem Digit@l MT: Potencialização do Ensino para Recomposição da Aprendizagem"</em>. Esta aula integra o aulão de Ciências da Natureza do programa, realizado em Juscimeira-MT.</p>
-        <a href="https://www3.seduc.mt.gov.br/web/seduc/servicos?c=70665304&e=70716474" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold" style="color:var(--fis)"><i data-lucide="external-link" class="w-4 h-4" aria-hidden="true"></i>Página oficial do serviço (SEDUC-MT)</a>
+        <h3 class="font-display font-semibold">Checklists de estudos da reta final</h3>
+      </div>
+      <div class="flex flex-wrap gap-3">
+        <a href="checklist-primeiro-dia.html" class="px-5 py-2.5 rounded-lg text-sm font-semibold flex items-center gap-2" style="background:var(--accent);color:#fff"><i data-lucide="printer" class="w-4 h-4" aria-hidden="true"></i>Checklist do 1º dia</a>
+        <a href="checklist.html" class="px-5 py-2.5 rounded-lg text-sm font-semibold flex items-center gap-2" style="background:var(--fis);color:#fff"><i data-lucide="printer" class="w-4 h-4" aria-hidden="true"></i>Checklist do 2º dia</a>
       </div>
     </div>
-  </div>
+  </main>
 
-
-  <div class="panel p-6">
-    <h2 class="font-display text-xl font-semibold">Para que serve o ENEM</h2>
-    <p class="mt-3 text-sm leading-relaxed" style="color:var(--ink-soft)">O Exame Nacional do Ensino Médio é, para a maioria dos estudantes da rede pública, a principal porta de entrada para o ensino superior. Mais do que uma prova de conteúdo, o ENEM usa a <strong style="color:var(--ink)">Teoria de Resposta ao Item (TRI)</strong> para medir a coerência do desempenho — por isso, entender a lógica da prova é tão importante quanto dominar o conteúdo (veja a aba <strong style="color:var(--ink)">Dashboard analítico</strong>).</p>
-  </div>
-
-  <div class="panel p-6">
-  <h2 class="font-display text-xl font-semibold mb-4">Oportunidades do ENEM</h2>
-  <div class="grid sm:grid-cols-2 gap-4">
-    
-    <div class="rounded-lg p-4" style="border:1px solid var(--line)">
-      <i data-lucide="landmark" class="w-5 h-5 mb-2" style="color:var(--fis)" aria-hidden="true"></i>
-      <h3 class="font-semibold text-sm">Sisu</h3>
-      <p class="text-xs mt-1" style="color:var(--ink-soft)">Sistema de Seleção Unificada: acesso a vagas em universidades e institutos federais públicos com base na nota do ENEM.</p>
+  <footer class="site-footer">
+    <div class="logos">
+      <img src="assets/biotech_edudesign.png" alt="Bio+Tech EduDesign">
+      <img src="assets/pre_enem.png" alt="Pré-Enem Digit@l MT">
+      <img src="assets/gov_mato_grosso.png" alt="Governo do Estado de Mato Grosso">
     </div>
+    <p><strong>Projeto Pré-Enem Digit@l MT 2026 · Aulão em Juscimeira-MT · Dados de frequência: série histórica INEP/ENEM 2014–2024</strong></p>
+    <p>Desenvolvido por <a href="https://github.com/bio-tech-edu">Bio+Tech EduDesign</a> · Apoio institucional <strong>Governo do Estado de Mato Grosso</strong></p>
+  </footer>
 
-    <div class="rounded-lg p-4" style="border:1px solid var(--line)">
-      <i data-lucide="school" class="w-5 h-5 mb-2" style="color:var(--qui)" aria-hidden="true"></i>
-      <h3 class="font-semibold text-sm">Prouni</h3>
-      <p class="text-xs mt-1" style="color:var(--ink-soft)">Programa Universidade para Todos: bolsas integrais ou parciais em faculdades e universidades privadas.</p>
-    </div>
+  <script src="assets/js/app.js" defer></script>
+  <script>
+    const SG_FOTOS=[
+      {src:'assets/galeria/foto_002.png',w:1500,h:1125,alt:'Professora Simone apresentando o repertório de Linguagem e suas tecnologias no 1º dia do ENEM'},
+      {src:'assets/galeria/foto_003.jpg',w:1500,h:768,alt:'Professora Simone e Professor Vitor debatendo o repertório do 1º dia do ENEM'},
+      {src:'assets/galeria/foto_004.jpg',w:1500,h:1125,alt:'Professor Vitor acompanhando com os estudantes o repertório do 1º dia do ENEM'},
+      {src:'assets/galeria/foto_005.jpg',w:900,h:803,alt:'Estudantes participando do aulão em Juscimeira-MT'},
+      {src:'assets/galeria/foto_006.jpg',w:900,h:533,alt:'Professora Pâmella apresentando o dashboard do Raio-X do 2º dia do ENEM'},
+      {src:'assets/galeria/foto_007.jpg',w:900,h:458,alt:'Estudantes participando do aulão em Juscimeira-MT'},
+      {src:'assets/galeria/foto_008.jpg',w:900,h:775,alt:'Estudantes participando do aulão em Juscimeira-MT'},
+      {src:'assets/galeria/foto_009.jpg',w:900,h:423,alt:'Estudantes participando do aulão em Juscimeira-MT'},
+      {src:'assets/galeria/foto_010.jpg',w:900,h:813,alt:'Estudantes participando do aulão em Juscimeira-MT'},
+      {src:'assets/galeria/foto_011.jpg',w:1394,h:910,alt:'Estudantes participando do aulão em Juscimeira-MT'},
+      {src:'assets/galeria/foto_012.jpg',w:900,h:752,alt:'Estudantes participando do aulão em Juscimeira-MT'},
+      {src:'assets/galeria/foto_013.jpg',w:1558,h:731,alt:'Estudantes participando do aulão em Juscimeira-MT'},
+      {src:'assets/galeria/foto_014.jpg',w:1531,h:813,alt:'Estudantes participando do aulão em Juscimeira-MT'},
+      {src:'assets/galeria/foto_015.jpg',w:900,h:533,alt:'Professor Vitor e os estudantes participantes do aulão em Juscimeira-MT'},
+      {src:'assets/galeria/foto_016.jpg',w:1415,h:1018,alt:'Professor Vitor e os estudantes participantes do aulão em Juscimeira-MT'},
+      {src:'assets/galeria/foto_017.jpg',w:1408,h:1122,alt:'Os profissionais da educação participantes do aulão em Juscimeira-MT'},
+      {src:'assets/galeria/foto_018.jpg',w:1480,h:1067,alt:'Os profissionais da educação participantes do aulão em Juscimeira-MT'}
+    ];
+    window.GALERIA_FOTOS = SG_FOTOS;
 
-    <div class="rounded-lg p-4" style="border:1px solid var(--line)">
-      <i data-lucide="banknote" class="w-5 h-5 mb-2" style="color:var(--bio)" aria-hidden="true"></i>
-      <h3 class="font-semibold text-sm">Fies</h3>
-      <p class="text-xs mt-1" style="color:var(--ink-soft)">Fundo de Financiamento Estudantil: financiamento da graduação em instituições privadas, pago após a conclusão do curso.</p>
-    </div>
-
-    <div class="rounded-lg p-4" style="border:1px solid var(--line)">
-      <i data-lucide="plane" class="w-5 h-5 mb-2" style="color:var(--accent)" aria-hidden="true"></i>
-      <h3 class="font-semibold text-sm">Instituições em Portugal</h3>
-      <p class="text-xs mt-1" style="color:var(--ink-soft)">Diversas universidades portuguesas aceitam a nota do ENEM como via de ingresso, sem exigir novo vestibular.</p>
-    </div>
-
-    <div class="rounded-lg p-4 sm:col-span-2" style="border:1px solid var(--line)">
-      <i data-lucide="hand-heart" class="w-5 h-5 mb-2" style="color:var(--hard)" aria-hidden="true"></i>
-      <h3 class="font-semibold text-sm">🎓 Programas de Permanência Estudantil (Assistência Estudantil)</h3>
-      
-      <p class="text-xs mt-2" style="color:var(--ink-soft)">
-        O ingresso na universidade é apenas o primeiro passo. Para garantir que os estudantes — especialmente aqueles de baixa renda ou em situação de vulnerabilidade socioeconômica — tenham plenas condições de se manterem no ensino superior até a formatura, as instituições públicas oferecem a <strong>Assistência Estudantil</strong>.
-      </p>
-      
-      <p class="text-xs mt-2" style="color:var(--ink-soft)">
-        Esses programas concedem auxílios financeiros e estruturais fundamentais. <strong>Veja exemplos práticos de como isso funciona nas universidades públicas de Mato Grosso (MT) e região:</strong>
-      </p>
-
-      <ul class="list-disc pl-5 space-y-1.5 text-xs mt-2" style="color:var(--ink-soft)">
-        <li>
-          <strong>UFMT (Universidade Federal de Mato Grosso):</strong> Por meio da Pró-Reitoria de Assistência Estudantil (PRAE), a instituição oferece o <em>Auxílio Moradia</em> (uma ajuda de custo mensal para pagar aluguel), isenção ou subsídio no <em>Restaurante Universitário (RU)</em> para garantir alimentação de qualidade, além do <em>Auxílio Transporte</em> e estrutura de Residência Universitária.
-        </li>
-        <li>
-          <strong>UFR (Universidade Federal de Rondonópolis):</strong> Através da Pró-Reitoria de Assistência Estudantil (PRAE), a UFR disponibiliza um conjunto robusto de benefícios que incluem o <em>Auxílio Moradia</em> (em dinheiro/pecúnia ou vaga na Casa do Estudante Universitário - CEU), <em>Auxílio Permanência</em>, <em>Auxílio Creche</em> (para estudantes com filhos pequenos), gratuidade no <em>Restaurante Universitário (RU)</em> e suporte para monitoria inclusiva.
-        </li>
-        <li>
-          <strong>UNEMAT (Universidade do Estado de Mato Grosso):</strong> Com forte presença no interior do estado, a UNEMAT possui editais regulares de <em>Auxílio Moradia</em>, <em>Auxílio Alimentação</em> e bolsas de apoio à permanência, incluindo políticas específicas de acolhimento para estudantes indígenas e quilombolas.
-        </li>
-        <li>
-          <strong>IFMT (Instituto Federal de Mato Grosso):</strong> Através de sua Política de Assistência Estudantil, o IFMT oferece aos estudantes de graduação (licenciaturas, bacharelados e tecnólogos) o <em>Auxílio Permanência</em>, além de apoios pontuais para transporte, alimentação e inclusão digital (como auxílio para acesso à internet e compra de materiais).
-        </li>
-        <li>
-          <strong>Destaques em Estados Vizinhos (como UFMS e UFG):</strong> Caso o estudante opte por usar a nota do ENEM para universidades federais próximas (Mato Grosso do Sul ou Goiás), ele também encontrará estruturas robustas que oferecem desde auxílio-moradia até bolsas remuneradas de Iniciação Científica e Extensão.
-        </li>
-      </ul>
-
-      <div class="dica-estrategica rounded p-3 mt-4 text-xs" style="background-color: var(--surface-soft, #f8f9fa); border-left: 4px solid var(--accent, #0d6efd);">
-        <p class="m-0" style="color: var(--ink)">
-          <strong>💡 Dica Estratégica:</strong> A sua nota do ENEM (via Sisu) não apenas abre a porta de entrada da universidade, mas também é o seu passaporte para acessar esses programas de apoio logo nas primeiras semanas de aula. Estudar é um direito seu, e a universidade pública tem estrutura para apoiar quem mais precisa!
-        </p>
-      </div>
-    </div>
-  </div>
-  </div>
-
-  <!-- ============ GALERIA DE FOTOS DO AULÃO ============ -->
-  <section class="panel p-6" aria-labelledby="galeriaTitulo">
-    <div class="sg-head">
-      <div class="max-w-2xl">
-        <h2 id="galeriaTitulo" class="font-display text-xl font-semibold">Galeria de fotos do aulão</h2>
-        <p class="mt-2 text-sm leading-relaxed" style="color:var(--ink-soft)">Registro fotográfico do aulão em Juscimeira-MT (Projeto Pré-ENEM Digit@l MT): os repertórios do 1º dia, o dashboard analítico e o estudo de caso da Estação de Tratamento de Água do 2º dia. Clique em qualquer foto para vê-la em tela cheia, na resolução original e sem cortes.</p>
-      </div>
-      <span class="sg-count" id="sgCount" aria-live="polite"></span>
-    </div>
-    <div class="sg-grid" id="sgGrid" role="group" aria-label="Fotos do aulão em Juscimeira-MT"></div>
-    <div class="sg-lightbox" id="sgLightbox" role="dialog" aria-modal="true" aria-label="Visualização ampliada da foto">
-      <button type="button" class="sg-lb-close" id="sgClose" aria-label="Fechar visualização"><i data-lucide="x" class="w-5 h-5" aria-hidden="true"></i></button>
-      <button type="button" class="sg-lb-btn sg-lb-prev" id="sgPrev" aria-label="Foto anterior"><i data-lucide="chevron-left" class="w-5 h-5" aria-hidden="true"></i></button>
-      <figure class="sg-lb-figure">
-        <img class="sg-lb-img" id="sgImg" src="" alt="">
-        <figcaption class="sg-lb-cap" id="sgCap"></figcaption>
-        <p class="sg-lb-idx" id="sgIdx"></p>
-      </figure>
-      <button type="button" class="sg-lb-btn sg-lb-next" id="sgNext" aria-label="Próxima foto"><i data-lucide="chevron-right" class="w-5 h-5" aria-hidden="true"></i></button>
-    </div>
-  </section>
-
-
-  <!-- CHECKLIST -->
-  <div class="panel p-6 flex flex-wrap items-center justify-between gap-4">
-    <div>
-      <h3 class="font-display font-semibold">Checklists de estudos da reta final</h3>
-    </div>
-    <a href="checklist-primeiro-dia.html" class="px-5 py-2.5 rounded-lg text-sm font-semibold flex items-center gap-2"><i data-lucide="printer" class="w-4 h-4" aria-hidden="true"></i>Checklist do 1º dia</a>
-    <a href="checklist.html" class="px-5 py-2.5 rounded-lg text-sm font-semibold flex items-center gap-2"><i data-lucide="printer" class="w-4 h-4" aria-hidden="true"></i>Checklist do 2º dia</a>
-  </div>
-</section>  
-
-</main>
-
-<!-- FOOTER -->
-<footer class="site-footer">
-  <div class="logos">
-    <img src="assets/biotech_edudesign.png" alt="Bio+Tech EduDesign">
-    <img src="assets/pre_enem.png" alt="Pré-Enem Digit@l MT">
-    <img src="assets/gov_mato_grosso.png" alt="Governo do Estado de Mato Grosso">
-  </div>
-  <p><strong>Projeto Pré-Enem Digit@l MT 2026 · Aulão em Juscimeira-MT · Dados de frequência: série histórica INEP/ENEM 2014–2024</strong></p>
-  <p>Desenvolvido por <a href="https://github.com/bio-tech-edu">Bio+Tech EduDesign</a> · Apoio institucional <strong>Governo do Estado de Mato Grosso</strong></p>
-</footer>
-
-<!-- Métricas simples de uso (GoatCounter — gratuito, sem cookies, sem dados pessoais). -->
-<!-- Troque "SEU-CODIGO" pela sua conta em https://www.goatcounter.com antes de publicar. -->
-<script data-goatcounter="https://SEU-CODIGO.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-
-<script>
-const root=document.documentElement;
-if(localStorage.theme==='dark'||(!('theme' in localStorage)&&matchMedia('(prefers-color-scheme: dark)').matches)) root.classList.add('dark');
-function syncToggle(){document.getElementById('darkToggle').setAttribute('aria-pressed', root.classList.contains('dark')?'true':'false');}
-syncToggle();
-document.getElementById('darkToggle').onclick=()=>{
-  root.classList.toggle('dark');
-  localStorage.theme=root.classList.contains('dark')?'dark':'light';
-  syncToggle();
-};
-/* ================= GALERIA DE FOTOS (grade responsiva + lightbox) =================
-   w/h são as dimensões nativas de cada arquivo: reservam o espaço antes do
-   carregamento e impedem que o lightbox amplie a imagem além da resolução original.
-*/
-const SG_FOTOS=[
- {src:'assets/galeria/foto_002.png',w:1500,h:1125,alt:'Professora Simone apresentando o repertório de Linguagem e suas tecnologias no 1º dia do ENEM'},
- {src:'assets/galeria/foto_003.jpg',w:1500,h:768,alt:'Professora Simone e Professor Vitor debatendo o repertório do 1º dia do ENEM'},
- {src:'assets/galeria/foto_004.jpg',w:1500,h:1125,alt:'Professor Vitor acompanhando com os estudantes o repertório do 1º dia do ENEM'},
- {src:'assets/galeria/foto_005.jpg',w:900,h:803,alt:'Estudantes participando do aulão em Juscimeira-MT'},
- {src:'assets/galeria/foto_006.jpg',w:900,h:533,alt:'Professora Pâmella apresentando o dashboard do Raio-X do 2º dia do ENEM'},
- {src:'assets/galeria/foto_007.jpg',w:900,h:458,alt:'Estudantes participando do aulão em Juscimeira-MT'},
- {src:'assets/galeria/foto_008.jpg',w:900,h:775,alt:'Estudantes participando do aulão em Juscimeira-MT'},
- {src:'assets/galeria/foto_009.jpg',w:900,h:423,alt:'Estudantes participando do aulão em Juscimeira-MT'},
- {src:'assets/galeria/foto_010.jpg',w:900,h:813,alt:'Estudantes participando do aulão em Juscimeira-MT'},
- {src:'assets/galeria/foto_011.jpg',w:1394,h:910,alt:'Estudantes participando do aulão em Juscimeira-MT'},
- {src:'assets/galeria/foto_012.jpg',w:900,h:752,alt:'Estudantes participando do aulão em Juscimeira-MT'},
- {src:'assets/galeria/foto_013.jpg',w:1558,h:731,alt:'Estudantes participando do aulão em Juscimeira-MT'},
- {src:'assets/galeria/foto_014.jpg',w:1531,h:813,alt:'Estudantes participando do aulão em Juscimeira-MT'},
- {src:'assets/galeria/foto_015.jpg',w:900,h:533,alt:'Professor Vitor e os estudantes participantes do aulão em Juscimeira-MT'},
- {src:'assets/galeria/foto_016.jpg',w:1415,h:1018,alt:'Professor Vitor e os estudantes participantes do aulão em Juscimeira-MT'},
- {src:'assets/galeria/foto_017.jpg',w:1408,h:1122,alt:'Os profissionais da educação participantes do aulão em Juscimeira-MT'},
- {src:'assets/galeria/foto_018.jpg',w:1480,h:1067,alt:'Os profissionais da educação participantes do aulão em Juscimeira-MT'}
-];
-(function initGaleria(){
-  const grid=document.getElementById('sgGrid');
-  if(!grid)return;
-  const lb=document.getElementById('sgLightbox');
-  const lbImg=document.getElementById('sgImg');
-  const lbCap=document.getElementById('sgCap');
-  const lbIdx=document.getElementById('sgIdx');
-  const btnPrev=document.getElementById('sgPrev');
-  const btnNext=document.getElementById('sgNext');
-  const btnClose=document.getElementById('sgClose');
-  const count=document.getElementById('sgCount');
-  if(!SG_FOTOS.length){
-    grid.innerHTML='<div class="galeria-empty"><p class="font-semibold text-sm">Galeria em construção</p><p class="text-xs mt-1">As fotos do aulão serão publicadas aqui.</p></div>';
-    return;
-  }
-  if(count)count.textContent=SG_FOTOS.length+' fotos';
-  SG_FOTOS.forEach(function(f,i){
-    const b=document.createElement('button');
-    b.type='button';
-    b.className='sg-item';
-    b.setAttribute('aria-label','Ampliar foto '+(i+1)+' de '+SG_FOTOS.length+': '+(f.alt||''));
-    b.innerHTML='<img src="'+f.src+'" alt="'+(f.alt||'')+'" width="'+f.w+'" height="'+f.h+'" loading="lazy" decoding="async">'
-      +'<span class="sg-veil" aria-hidden="true"></span>'
-      +'<span class="sg-zoom" aria-hidden="true"><i data-lucide="maximize-2" class="w-4 h-4"></i></span>';
-    b.addEventListener('click',function(){abrir(i);});
-    grid.appendChild(b);
-  });
-  let cur=0,ultimoFoco=null;
-  function render(){
-    const f=SG_FOTOS[cur];
-    lbImg.src=f.src;
-    lbImg.alt=f.alt||'';
-    lbImg.style.setProperty('--sg-native-w',f.w+'px');
-    lbImg.style.setProperty('--sg-native-h',f.h+'px');
-    lbCap.textContent=f.alt||'';
-    lbIdx.textContent=(cur+1)+' / '+SG_FOTOS.length;
-  }
-  function abrir(i){
-    cur=i;render();ultimoFoco=document.activeElement;
-    lb.classList.add('is-open');document.body.classList.add('sg-lock');
-    btnClose.focus();
-  }
-  function fechar(){
-    lb.classList.remove('is-open');document.body.classList.remove('sg-lock');
-    if(ultimoFoco&&ultimoFoco.focus)ultimoFoco.focus();
-  }
-  function mover(d){cur=(cur+d+SG_FOTOS.length)%SG_FOTOS.length;render();}
-  btnPrev.onclick=function(){mover(-1);};
-  btnNext.onclick=function(){mover(1);};
-  btnClose.onclick=fechar;
-  lb.addEventListener('click',function(e){if(e.target===lb)fechar();});
-  document.addEventListener('keydown',function(e){
-    if(!lb.classList.contains('is-open'))return;
-    if(e.key==='Escape')fechar();
-    else if(e.key==='ArrowLeft'){e.preventDefault();mover(-1);}
-    else if(e.key==='ArrowRight'){e.preventDefault();mover(1);}
-  });
-  let x0=null;
-  lb.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;},{passive:true});
-  lb.addEventListener('touchend',function(e){
-    if(x0===null)return;
-    const dx=e.changedTouches[0].clientX-x0;
-    if(Math.abs(dx)>45)mover(dx<0?1:-1);
-    x0=null;
-  },{passive:true});
-  if(window.lucide)lucide.createIcons();
-})();
-lucide.createIcons();
-</script>
-
-<script>
-/* ================= CONTADOR DE DIAS PARA AS PROVAS DO ENEM =================
-   Lê a data de cada elemento com [data-date] (formato AAAA-MM-DD) e escreve quantos
-   dias faltam. Usa a meia-noite LOCAL do aparelho do estudante — não UTC — para que
-   a contagem não "pule" um dia em fusos negativos (Mato Grosso é UTC-4).
-   Recalcula sozinho na virada do dia e ao voltar para a aba; nada de recarregar.
-*/
-(function contadorEnem(){
-  var alvos=document.querySelectorAll('.cd-strip[data-date]');
-  if(!alvos.length)return;
-  var DIA=86400000;
-
-  function hojeLocal(){
-    var n=new Date();
-    return new Date(n.getFullYear(),n.getMonth(),n.getDate());
-  }
-  function dataLocal(iso){
-    var p=iso.split('-');
-    return new Date(parseInt(p[0],10),parseInt(p[1],10)-1,parseInt(p[2],10));
-  }
-  function texto(dias,rotulo){
-    if(dias>1)return 'Faltam '+dias+' dias para o '+rotulo+' do ENEM';
-    if(dias===1)return 'Falta 1 dia para o '+rotulo+' do ENEM';
-    if(dias===0)return 'É hoje! '+rotulo.charAt(0).toUpperCase()+rotulo.slice(1)+' do ENEM';
-    return 'Prova realizada';
-  }
-  function atualizar(){
-    var hoje=hojeLocal();
-    Array.prototype.forEach.call(alvos,function(el){
-      var dias=Math.round((dataLocal(el.getAttribute('data-date'))-hoje)/DIA);
-      var rotulo=el.getAttribute('data-rotulo')||'dia';
-      var span=el.querySelector('.cd-texto');
-      if(span)span.textContent=texto(dias,rotulo);
-      el.classList.toggle('is-hoje',dias===0);
-      el.classList.toggle('is-passado',dias<0);
-      el.setAttribute('data-dias',String(dias));
-    });
-  }
-  function agendar(){
-    var a=new Date();
-    var proxima=new Date(a.getFullYear(),a.getMonth(),a.getDate()+1,0,0,5);
-    setTimeout(function(){atualizar();agendar();},proxima-a);
-  }
-  atualizar();
-  agendar();
-  document.addEventListener('visibilitychange',function(){if(!document.hidden)atualizar();});
-})();
-</script>
+    (function initGaleria(){
+      const grid=document.getElementById('sgGrid');
+      if(!grid)return;
+      const lb=document.getElementById('sgLightbox');
+      const lbImg=document.getElementById('sgImg');
+      const lbCap=document.getElementById('sgCap');
+      const lbIdx=document.getElementById('sgIdx');
+      const btnPrev=document.getElementById('sgPrev');
+      const btnNext=document.getElementById('sgNext');
+      const btnClose=document.getElementById('sgClose');
+      const count=document.getElementById('sgCount');
+      if(!SG_FOTOS.length){
+        grid.innerHTML='<div class="galeria-empty"><p class="font-semibold text-sm">Galeria em construção</p><p class="text-xs mt-1">As fotos do aulão serão publicadas aqui.</p></div>';
+        return;
+      }
+      if(count)count.textContent=SG_FOTOS.length+' fotos';
+      SG_FOTOS.forEach(function(f,i){
+        const b=document.createElement('button');
+        b.type='button';
+        b.className='sg-item';
+        b.setAttribute('aria-label','Ampliar foto '+(i+1)+' de '+SG_FOTOS.length+': '+(f.alt||''));
+        b.innerHTML='<img src="'+f.src+'" alt="'+(f.alt||'')+'" width="'+f.w+'" height="'+f.h+'" loading="lazy" decoding="async">'
+          +'<span class="sg-veil" aria-hidden="true"></span>'
+          +'<span class="sg-zoom" aria-hidden="true"><i data-lucide="maximize-2" class="w-4 h-4"></i></span>';
+        b.addEventListener('click',function(){abrir(i);});
+        grid.appendChild(b);
+      });
+      let cur=0,ultimoFoco=null;
+      function render(){
+        const f=SG_FOTOS[cur];
+        lbImg.src=f.src;
+        lbImg.alt=f.alt||'';
+        lbImg.style.setProperty('--sg-native-w',f.w+'px');
+        lbImg.style.setProperty('--sg-native-h',f.h+'px');
+        lbCap.textContent=f.alt||'';
+        lbIdx.textContent=(cur+1)+' / '+SG_FOTOS.length;
+      }
+      function abrir(i){
+        cur=i;render();ultimoFoco=document.activeElement;
+        lb.classList.add('is-open');document.body.classList.add('sg-lock');
+        btnClose.focus();
+      }
+      function fechar(){
+        lb.classList.remove('is-open');document.body.classList.remove('sg-lock');
+        if(ultimoFoco&&ultimoFoco.focus)ultimoFoco.focus();
+      }
+      function mover(d){cur=(cur+d+SG_FOTOS.length)%SG_FOTOS.length;render();}
+      btnPrev.onclick=function(){mover(-1);};
+      btnNext.onclick=function(){mover(1);};
+      btnClose.onclick=fechar;
+      lb.addEventListener('click',function(e){if(e.target===lb)fechar();});
+      document.addEventListener('keydown',function(e){
+        if(!lb.classList.contains('is-open'))return;
+        if(e.key==='Escape')fechar();
+        else if(e.key==='ArrowLeft'){e.preventDefault();mover(-1);}
+        else if(e.key==='ArrowRight'){e.preventDefault();mover(1);}
+      });
+      let x0=null;
+      lb.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;},{passive:true});
+      lb.addEventListener('touchend',function(e){
+        if(x0===null)return;
+        const dx=e.changedTouches[0].clientX-x0;
+        if(Math.abs(dx)>45)mover(dx<0?1:-1);
+        x0=null;
+      },{passive:true});
+      if(window.lucide)lucide.createIcons();
+    })();
+    lucide.createIcons();
+  </script>
 </body>
 </html>
