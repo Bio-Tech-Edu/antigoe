@@ -60,29 +60,39 @@ tailwind.config = {
   .tab-btn{position:relative;padding:.85rem .25rem;font-size:.9rem;font-weight:600;color:var(--ink-soft);white-space:nowrap;background:none;border:none;cursor:pointer}
   .tab-btn::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:3px;background:transparent;border-radius:2px 2px 0 0}
   .tab-btn:hover{color:var(--ink)}
-  .tab-btn[aria-selected="true"]{color:var(--ink)}
+  .tab-btn[aria-selected="true"], .tab-btn[aria-expanded="true"]{color:var(--ink)}
   .tab-btn[aria-selected="true"]::after{background:var(--accent-glow)}
 
   .subtab-btn{padding:.5rem 1rem;border-radius:9999px;font-size:.8rem;font-weight:600;border:1px solid var(--line);background:var(--paper-raised);color:var(--ink-soft);cursor:pointer}
   .subtab-btn[aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
 
-  .heat-card{transition:transform .15s ease;border-left:5px solid var(--heat-c,#999);background:var(--paper-raised);border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .heat-card{transition:transform .15s ease;border-left:5px solid var(--heat-c,#999);background:var(--paper-raised);border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line);border-radius:12px}
   .heat-card:hover{transform:translateY(-2px)}
   .fade-in{animation:fadeIn .3s ease both}
   @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
-  .alt-btn{width:100%;text-align:left;padding:.7rem 1rem;border-radius:10px;border:1px solid var(--line);background:var(--paper-raised);font-size:.875rem;color:var(--ink);cursor:pointer;transition:border-color .15s ease}
+  .alt-btn{width:100%;text-align:left;padding:.7rem 1rem;border-radius:10px;border:1px solid var(--line);background:var(--paper-raised);font-size:.875rem;color:var(--ink);cursor:pointer;transition:border-color .15s ease, background .15s ease}
   .alt-btn:hover{border-color:var(--fis)}
   .alt-btn.correct{border-color:var(--easy);background:color-mix(in srgb, var(--easy) 12%, var(--paper-raised))}
   .alt-btn.wrong{border-color:var(--hard);background:color-mix(in srgb, var(--hard) 12%, var(--paper-raised))}
 
-  a:focus-visible, button:focus-visible, .alt-btn:focus-visible{outline:2.5px solid var(--focus);outline-offset:2px}
+  .aulao-flag{display:inline-flex;align-items:center;gap:.5rem;border-radius:9999px;padding:.4rem .75rem;background:color-mix(in srgb, var(--accent-glow) 18%, var(--paper-raised));color:var(--ink);font-size:.75rem;font-weight:700;letter-spacing:.02em}
+  .aulao-question{display:flex;flex-direction:column;gap:1rem}
+  .aulao-question h3{font-size:1rem;font-weight:700}
+  .aulao-answers{display:grid;gap:.75rem}
+  .aulao-option{width:100%;text-align:left;padding:.8rem .9rem;border-radius:10px;border:1px solid var(--line);background:var(--paper-raised);color:var(--ink);font-size:.9rem;line-height:1.5;cursor:pointer;transition:border-color .15s ease, transform .15s ease, opacity .15s ease, background .15s ease}
+  .aulao-option:hover{border-color:var(--fis);transform:translateY(-1px)}
+  .aulao-option.correct{border-color:var(--easy);background:color-mix(in srgb, var(--easy) 12%, var(--paper-raised));color:var(--ink)}
+  .aulao-option.distrator-descartado{text-decoration:line-through;opacity:.5;border-color:var(--hard);background:color-mix(in srgb, var(--hard) 12%, var(--paper-raised))}
+
+  a:focus-visible, button:focus-visible, .alt-btn:focus-visible, .aulao-option:focus-visible{outline:2.5px solid var(--focus);outline-offset:2px}
 
   ::-webkit-scrollbar{height:8px;width:8px}::-webkit-scrollbar-thumb{background:#94a3b8;border-radius:8px}
 
   @media (prefers-reduced-motion: reduce){
     .fade-in{animation:none}
     .heat-card{transition:none}
+    .aulao-option{transition:none}
   }
 
   .skip-link{position:absolute;left:-999px;top:0;background:#fff;color:#000;padding:.6rem 1rem;z-index:100;border-radius:0 0 8px 0}
@@ -117,7 +127,7 @@ tailwind.config = {
     <div class="flex flex-wrap items-start justify-between gap-6">
       <div class="max-w-2xl">
         <h1 class="font-display text-3xl md:text-5xl font-semibold tracking-tight leading-[1.08]">Raio-X do 2º dia do ENEM</h1>
-        <p class="mt-4 text-white/75 text-base leading-relaxed max-w-xl">Um painel de dados e um estudo de caso para decodificar Biologia, Química e Física antes da prova: o que mais cai, o que garante nota e onde não vale a pena travar o tempo.</p>
+        <p class="mt-4 text-white/75 text-base leading-relaxed max-w-xl">Um painel de dados e um estudo de caso para decodificar Biologia, Química e Física antes da prova: o que mais cai, o que garante nota e onde não vale a pena se perder.</p>
       </div>
       <div class="flex items-center gap-2">
         <button id="darkToggle" aria-pressed="false" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg px-3 py-2 text-sm font-medium transition">
@@ -149,7 +159,8 @@ tailwind.config = {
     <button class="tab-btn" data-tab="estudo" role="tab" aria-selected="false" tabindex="-1" aria-controls="tab-estudo" id="tabbtn-estudo">Estudo de caso: água</button>
     <button class="tab-btn" data-tab="desafio" role="tab" aria-selected="false" tabindex="-1" aria-controls="tab-desafio" id="tabbtn-desafio">Think-Pair-Share</button>
     <button class="tab-btn" data-tab="checklist" role="tab" aria-selected="false" tabindex="-1" aria-controls="tab-checklist" id="tabbtn-checklist">Distratores e TRI</button>
-    <button class="tab-btn" data-tab="geral" role="tab" aria-selected="true" tabindex="0" aria-controls="tab-geral" id="tabbtn-geral">Créditos</button>
+    <button class="tab-btn" data-tab="aulao-vespera" role="tab" aria-selected="false" tabindex="-1" aria-controls="aulao-vespera" aria-expanded="false" id="tabbtn-aulao">Aulão de Véspera</button>
+    <button class="tab-btn" data-tab="geral" role="tab" aria-selected="true" tabindex="0" aria-controls="tab-geral" aria-expanded="true" id="tabbtn-geral">Créditos</button>
   </div>
 </nav>
 
@@ -164,7 +175,7 @@ tailwind.config = {
       <div>
         <p class="font-display text-lg font-semibold">Prof.ª Pâmella Araújo Balcaçar</p>
         <p class="text-sm font-medium mt-0.5" style="color:var(--accent)">Ciências Biológicas · Tecnologia Educacional</p>
-        <p class="mt-3 text-sm leading-relaxed" style="color:var(--ink-soft)">Licenciada em Ciências Biológicas pela UFMT e tecnóloga em Informática, com mais de 14 anos de docência na rede pública de Mato Grosso (SEDUC-MT) em Biologia, Química, Física e Informática Aplicada. É Professora de Química atuante no quadro do Projeto Pré-ENEM Digit@l MT, no polo da DRE Rondonópolis-MT. Recentemente, atuava como Tutora Temática em Tecnologia Educacional no curso Bacharelado interdisciplinar em Ciência e Tecnologia da UFMT (Sistema UAB/CAPES) e integrou o Programa de Pós-Graduação em Telessaúde e Saúde Digital da UERJ, com pesquisa voltada a tecnologias de informação e inteligência artificial aplicadas à saúde. É membra do Grupo de Pesquisa em Ambientes Virtuais e Inteligentes (CNPq/UERJ) e, desde 2018, integra a comunidade PyLadies Brasil, de incentivo e permanência das mulheres nas áreas de tecnologia. <br> E é fundadora e CEO da EdTech <a href="https://github.com/bio-tech-edu" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 mt-4 text-sm font-semibold" style="color:var(--fis)"><i data-lucide="external-link" class="w-4 h-4" aria-hidden="true"></i>Bio+Tech EduDesign.</a></p>
+        <p class="mt-3 text-sm leading-relaxed" style="color:var(--ink-soft)">Licenciada em Ciências Biológicas pela UFMT e tecnóloga em Informática, com mais de 14 anos de docência na rede pública de Mato Grosso (SEDUC-MT) e em Biologia, Química e Informática Aplicada. É professora de Química atuante no quadro da SEDUC e docente do Projeto Pré-ENEM Digital, no polo da DRE Rondonópolis-MT. Recentemente, atuou como Tutora Técnica em Tecnologia Educacional no curso Bacharelado em Ciências e Tecnologia da UFMT (Sistema UAB/CAPES) e integrou a comunidade ProLattes Brasil, de incentivo e permanência das mulheres nas áreas de tecnologia.</p>
         <div class="flex flex-wrap gap-4 mt-4 text-sm font-semibold">
           <a href="http://lattes.cnpq.br/1206643836491711" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5" style="color:var(--fis)"><i data-lucide="graduation-cap" class="w-4 h-4" aria-hidden="true"></i>Currículo Lattes</a>
           <a href="https://br.linkedin.com/in/pamellabiotec" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5" style="color:var(--fis)"><i data-lucide="linkedin" class="w-4 h-4" aria-hidden="true"></i>LinkedIn</a>
@@ -174,15 +185,11 @@ tailwind.config = {
     </div>
   </div>
 
-  <!-- Sala virtual do Projeto Pré-ENEM Digital -->
   <div class="panel p-6 text-center">
     <h2 class="font-display text-xl font-semibold">Acesse a sala virtual do Projeto Pré-ENEM Digital</h2>
-    <p class="mt-2 text-sm leading-relaxed" style="color:var(--ink-soft)">
-      Aponte a câmera do celular para o QR Code ou
-      <a href="https://classroom.google.com/c/ODY3OTcyNTg4Mzcz?cjc=3rqrv3v6" target="_blank" rel="noopener" style="color:var(--fis)" class="font-semibold underline">clique aqui para acessar a sala virtual</a>.</p>
+    <p class="mt-2 text-sm leading-relaxed" style="color:var(--ink-soft)">Aponte a câmera do celular para o QR Code ou <a href="https://classroom.google.com/c/ODY3OTcyNTg4Mzcz?cjc=3rqrv3v6" target="_blank" rel="noopener" style="color:var(--fis)" class="font-semibold underline">clique aqui para acessar a sala virtual.</a></p>
     <a href="https://classroom.google.com/c/ODY3OTcyNTg4Mzcz?cjc=3rqrv3v6" target="_blank" rel="noopener" class="inline-block mt-5" aria-label="Abrir a sala virtual do Projeto Pré-ENEM Digital"><img src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=https%3A%2F%2Fclassroom.google.com%2Fc%2FODY3OTcyNTg4Mzcz%3Fcjc%3D3rqrv3v6" alt="QR Code para acessar a sala virtual do Projeto Pré-ENEM Digital" width="150" height="150" class="mx-auto rounded-lg border-4 border-white shadow-md"></a>
-    <p class="mt-4 text-sm font-semibold" style="color:var(--accent)">Observação: para acessar a sala virtual, o estudante deverá utilizar
-    seu e-mail institucional no formato <strong>matricula@edu.mt.gov.br</strong>.</p>
+    <p class="mt-4 text-sm font-semibold" style="color:var(--accent)">Observação: para acessar a sala virtual, o estudante deverá utilizar seu e-mail institucional no formato <strong>matricula@edu.mt.gov.br</strong>.</p>
   </div>
 </section>
 
@@ -193,7 +200,7 @@ tailwind.config = {
     <div class="panel p-6 md:col-span-2">
       <h2 class="font-display text-lg font-semibold">Panorama geral da prova</h2>
       <p class="text-sm mt-1" style="color:var(--ink-soft)">Proporção de questões por componente · ENEM 2014–2024</p>
-      <div class="relative h-60 mt-4"><canvas id="chartRosca" role="img" aria-label="Gráfico de rosca: Biologia, Química e Física dividem igualmente as 45 questões de Ciências da Natureza, 33,3% cada"></canvas></div>
+      <div class="relative h-60 mt-4"><canvas id="chartRosca" role="img" aria-label="Gráfico de rosca: Biologia, Química e Física dividem igualmente as 45 questões de Ciências da Natureza, 33,3% cada."></canvas></div>
       <p class="mt-4 text-xs leading-relaxed" style="color:var(--ink-soft)">Distribuição equilibrada: <strong style="color:var(--ink)">15 questões</strong> de cada componente nas 45 de Ciências da Natureza. Nenhuma área pode ser negligenciada.</p>
     </div>
 
@@ -205,7 +212,7 @@ tailwind.config = {
           <button class="subtab-btn" data-subtab="logica" role="tab" aria-selected="false" aria-controls="tri-logica" id="subtabbtn-logica">Como funciona a TRI</button>
         </div>
       </div>
- 
+  
       <div id="tri-visao" class="subtab-panel mt-4" role="tabpanel" aria-labelledby="subtabbtn-visao">
         <p class="text-sm" style="color:var(--ink-soft)">Errar fáceis e acertar difíceis é penalizado como inconsistência pela Teoria de Resposta ao Item.</p>
         <div class="relative h-60 mt-4"><canvas id="chartTRI" role="img" aria-label="Gráfico de barras: 30% das questões são fáceis, 50% médias e 20% difíceis" aria-describedby="chartTRI-desc"></canvas></div>
@@ -220,16 +227,16 @@ tailwind.config = {
           </tbody>
         </table>
         <div class="mt-4 grid sm:grid-cols-3 gap-3 text-xs">
-          <div class="rounded-lg p-3" style="border:1px solid var(--line);background:color-mix(in srgb, var(--easy) 10%, var(--paper-raised))"><i data-lucide="shield-check" class="w-4 h-4 mb-1" style="color:var(--easy)" aria-hidden="true"></i><strong>Fáceis (~30%):</strong> zona de garantia. Errar aqui derruba sua régua TRI.</div>
-          <div class="rounded-lg p-3" style="border:1px solid var(--line);background:color-mix(in srgb, var(--mid) 10%, var(--paper-raised))"><i data-lucide="flag" class="w-4 h-4 mb-1" style="color:var(--mid)" aria-hidden="true"></i><strong>Médias (~50%):</strong> maior ganho de pontuação. Prioridade máxima.</div>
-          <div class="rounded-lg p-3" style="border:1px solid var(--line);background:color-mix(in srgb, var(--hard) 10%, var(--paper-raised))"><i data-lucide="alert-triangle" class="w-4 h-4 mb-1" style="color:var(--hard)" aria-hidden="true"></i><strong>Difíceis (~20%):</strong> resolva por último. Chutar com coerência supera perder tempo.</div>
+          <div class="rounded-lg p-3" style="border:1px solid var(--line);background:color-mix(in srgb, var(--easy) 10%, var(--paper-raised))"><i data-lucide="shield-check" class="w-4 h-4 mb-1" style="color:var(--easy)" aria-hidden="true"></i><strong>Fáceis (30%):</strong> zona de garantia.</div>
+          <div class="rounded-lg p-3" style="border:1px solid var(--line);background:color-mix(in srgb, var(--mid) 10%, var(--paper-raised))"><i data-lucide="flag" class="w-4 h-4 mb-1" style="color:var(--mid)" aria-hidden="true"></i><strong>Médias (50%):</strong> maior ganho de pontuação.</div>
+          <div class="rounded-lg p-3" style="border:1px solid var(--line);background:color-mix(in srgb, var(--hard) 10%, var(--paper-raised))"><i data-lucide="alert-triangle" class="w-4 h-4 mb-1" style="color:var(--hard)" aria-hidden="true"></i><strong>Difíceis (20%):</strong> resolver por último.</div>
         </div>
       </div>
- 
+  
       <div id="tri-logica" class="subtab-panel hidden mt-4" role="tabpanel" aria-labelledby="subtabbtn-logica">
         <figure class="mt-5">
-          <img src="assets/HQ_TRI.png" alt="Quadrinho em três cenas: dois estudantes acertam 30 questões cada, mas um tira 620 pontos e o outro 740. No segundo quadro, Sofia explica que a TRI mede a coerência pedagógica — acertar fáceis e médias garante nota alta. No terceiro, Lucas mostra seu padrão inconsistente: errou as quatro primeiras fáceis, chutou as médias e acertou as duas últimas difíceis, o que a TRI trata como chute." class="rounded-lg w-full max-w-md mx-auto" style="border:1px solid var(--line)">
-          <figcaption class="text-xs text-center mt-2" style="color:var(--ink-soft)">Exemplo: os dois estudantes acertaram o mesmo número de questões (30 de 45), mas tiraram notas bem diferentes — a diferença está em <em>quais</em> questões cada um acertou.<br> Fonte: Imagem gerada por Nanobanana.IA com supervisão pedagógica.</figcaption>
+          <img src="assets/HQ_TRI.png" alt="Quadrinho em três cenas: dois estudantes acertam 30 questões cada, mas um tira 620 pontos e o outro 740. No segundo quadro, Sofia explica que a TRI mede a coerência entre acertos e dificuldades. No terceiro quadro, Lucas mostra seu padrão inconsistente: erra fácil e acerta difícil, o que a TRI trata como custo." class="rounded-lg w-full max-w-md mx-auto border" style="border:1px solid var(--line)">
+          <figcaption class="text-xs text-center mt-2" style="color:var(--ink-soft)">Exemplo: os dois estudantes acertaram o mesmo número de questões (30 de 45), mas tiraram notas bem diferentes. A diferença está na qualidade dos acertos e dos erros — e isso a TRI mede com precisão.</figcaption>
         </figure>
       </div>
     </div>
@@ -272,18 +279,65 @@ tailwind.config = {
   </div>
 </section>
 
+<section id="aulao-vespera" class="tab-panel hidden space-y-6" role="tabpanel" aria-labelledby="tabbtn-aulao" tabindex="0">
+  <div class="panel p-6">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <h2 class="font-display text-xl font-semibold">Aulão de Véspera — Prática Guiada</h2>
+        <p class="text-sm mt-1" style="color:var(--ink-soft)">Analise cada item como se estivesse riscando distratores na prova física: primeiro leia, depois elimine o que não se sustenta.</p>
+      </div>
+      <span class="aulao-flag">Modo Analítico</span>
+    </div>
+  </div>
+
+  <div class="grid gap-5 lg:grid-cols-3">
+    <article class="panel p-5 aulao-question">
+      <h3>Questão 1 · Pilhas e eletrólise</h3>
+      <p class="text-sm leading-relaxed" style="color:var(--ink-soft)">Em uma pilha, a reação espontânea ocorre quando um metal atua como agente redutor e o outro como agente oxidante. Qual alternativa descreve corretamente a relação entre polo e processo?</p>
+      <div class="aulao-answers">
+        <button class="aulao-option" data-correct="false" type="button" aria-pressed="false">A) O ânodo é o polo positivo, porque aí ocorre redução.</button>
+        <button class="aulao-option" data-correct="true" type="button" aria-pressed="false">B) O ânodo é o polo negativo, porque aí ocorre oxidação.</button>
+        <button class="aulao-option" data-correct="false" type="button" aria-pressed="false">C) O cátodo é o polo negativo, porque aí ocorre oxidação.</button>
+        <button class="aulao-option" data-correct="false" type="button" aria-pressed="false">D) O cátodo é o polo positivo, porque aí ocorre oxidação.</button>
+      </div>
+    </article>
+
+    <article class="panel p-5 aulao-question">
+      <h3>Questão 2 · Química ambiental</h3>
+      <p class="text-sm leading-relaxed" style="color:var(--ink-soft)">Um corpo d'água recebe excesso de nutrientes e passa a apresentar crescimento de algas na superfície. Qual sequência melhor explica o processo de eutrofização?</p>
+      <div class="aulao-answers">
+        <button class="aulao-option" data-correct="false" type="button" aria-pressed="false">A) Acidificação direta → precipitação de metais → morte celular.</button>
+        <button class="aulao-option" data-correct="false" type="button" aria-pressed="false">C) Proliferação de algas → bloqueio da luz → decomposição aeróbica → anoxia.</button>
+        <button class="aulao-option" data-correct="true" type="button" aria-pressed="false">B) Proliferação de algas → bloqueio da luz → decomposição aeróbica → esgotamento do oxigênio.</button>
+        <button class="aulao-option" data-correct="false" type="button" aria-pressed="false">D) Diluição do fertilizante → aumento da salinidade → morte de peixes.</button>
+      </div>
+    </article>
+
+    <article class="panel p-5 aulao-question">
+      <h3>Questão 3 · Separação de misturas</h3>
+      <p class="text-sm leading-relaxed" style="color:var(--ink-soft)">Na etapa final do tratamento de água, o floco formado por coagulante precisa ser removido da fase líquida em um tanque sem agitação. A propriedade decisiva para essa remoção é:</p>
+      <div class="aulao-answers">
+        <button class="aulao-option" data-correct="false" type="button" aria-pressed="false">A) O ponto de ebulição da água.</button>
+        <button class="aulao-option" data-correct="true" type="button" aria-pressed="false">B) A diferença de densidade entre o floco e a água.</button>
+        <button class="aulao-option" data-correct="false" type="button" aria-pressed="false">C) A viscosidade cinemática do líquido.</button>
+        <button class="aulao-option" data-correct="false" type="button" aria-pressed="false">D) A pressão de vapor da mistura.</button>
+      </div>
+    </article>
+  </div>
+</section>
+
 <!-- ============ TAB 2: ESTUDO DE CASO ETA ============ -->
 <section id="tab-estudo" class="tab-panel hidden space-y-6" role="tabpanel" aria-labelledby="tabbtn-estudo" tabindex="0">
   <div class="panel p-6">
     <h2 class="font-display text-xl font-semibold">Estação de Tratamento de Água — um caso, três ciências</h2>
-    <p class="mt-2 text-sm leading-relaxed" style="color:var(--ink-soft)"><strong style="color:var(--ink)">Situação-problema:</strong> um município próximo a um polo industrial e agrícola registrou aumento de casos de amebíase e gastroenterite, com episódios recorrentes de proliferação de algas (eutrofização) no reservatório principal. A concessionária precisa otimizar o tratamento e adotar práticas de Química Verde para a destinação de efluentes.</p>
+    <p class="mt-2 text-sm leading-relaxed" style="color:var(--ink-soft)"><strong style="color:var(--ink)">Situação-problema:</strong> um município próximo a um polo industrial e agrícola registra aumento de casos de amebíase e giardíase, com efluentes contendo nutrientes e resíduos orgânicos. A concessão precisa otimizar o tratamento e adotar práticas de Química Verde para a destinação segura de efluentes.</p>
   </div>
 
   <div class="grid md:grid-cols-3 gap-5">
     <div class="panel p-6" style="border-top:4px solid var(--qui)">
       <div class="flex items-center justify-between"><span class="text-xs font-semibold" style="color:var(--qui)">Etapa 1 · Química</span><i data-lucide="flask-conical" class="w-5 h-5" style="color:var(--qui)" aria-hidden="true"></i></div>
       <h3 class="font-display text-lg font-semibold mt-2">Coagulação e floculação</h3>
-      <p class="text-sm mt-2 leading-relaxed" style="color:var(--ink-soft)">Adição de <strong style="color:var(--ink)">sulfato de alumínio</strong> e <strong style="color:var(--ink)">hidróxido de cálcio</strong>: anulação das cargas elétricas das partículas em suspensão, formação de flocos gelatinosos e ajuste de pH.</p>
+      <p class="text-sm mt-2 leading-relaxed" style="color:var(--ink-soft)">Adição de <strong style="color:var(--ink)">sulfato de alumínio</strong> e <strong style="color:var(--ink)">hidróxido de cálcio</strong>: as partículas coloidais se destabilizam e formam flocos que sedimentam.</p>
       <ul class="mt-4 space-y-2 text-xs" style="color:var(--ink-soft)">
         <li>Interações intermoleculares e hidrólise de sais</li>
         <li>Hidrólise: Al₂(SO₄)₃ + Ca(OH)₂ → flocos de Al(OH)₃</li>
@@ -294,7 +348,7 @@ tailwind.config = {
     <div class="panel p-6" style="border-top:4px solid var(--fis)">
       <div class="flex items-center justify-between"><span class="text-xs font-semibold" style="color:var(--fis)">Etapa 2 · Física</span><i data-lucide="arrow-down-to-line" class="w-5 h-5" style="color:var(--fis)" aria-hidden="true"></i></div>
       <h3 class="font-display text-lg font-semibold mt-2">Decantação</h3>
-      <p class="text-sm mt-2 leading-relaxed" style="color:var(--ink-soft)">Sedimentação dos flocos pela ação da <strong style="color:var(--ink)">gravidade</strong> e diferença de <strong style="color:var(--ink)">densidade</strong> entre o floco e o meio aquoso, em tanque sem agitação.</p>
+      <p class="text-sm mt-2 leading-relaxed" style="color:var(--ink-soft)">Sedimentação dos flocos pela ação da <strong style="color:var(--ink)">gravidade</strong> e diferença de <strong style="color:var(--ink)">densidade</strong> entre o floco e a água, em tanque sem agitação.</p>
       <ul class="mt-4 space-y-2 text-xs" style="color:var(--ink-soft)">
         <li>Peso &gt; empuxo → o floco afunda (d_floco &gt; d_água)</li>
         <li>Velocidade limite de sedimentação (equilíbrio de forças)</li>
@@ -305,7 +359,7 @@ tailwind.config = {
     <div class="panel p-6" style="border-top:4px solid var(--bio)">
       <div class="flex items-center justify-between"><span class="text-xs font-semibold" style="color:var(--bio)">Etapa 3 · Biologia</span><i data-lucide="bug" class="w-5 h-5" style="color:var(--bio)" aria-hidden="true"></i></div>
       <h3 class="font-display text-lg font-semibold mt-2">Desinfecção e cloração</h3>
-      <p class="text-sm mt-2 leading-relaxed" style="color:var(--ink-soft)">Inativação e destruição de estruturas celulares de patógenos (vírus, bactérias e protozoários como <em>Giardia</em> e <em>Entamoeba</em>), prevenindo parasitoses.</p>
+      <p class="text-sm mt-2 leading-relaxed" style="color:var(--ink-soft)">Inativação e destruição de estruturas celulares de patógenos (vírus, bactérias e protozoários como <em>Giardia</em> e <em>Entamoeba</em>), previnindo parasitoses e contaminações.</p>
       <ul class="mt-4 space-y-2 text-xs" style="color:var(--ink-soft)">
         <li>Saneamento básico e saúde pública (prevenção de amebíase/giardíase)</li>
         <li>Controle de eutrofização por excesso de matéria orgânica</li>
@@ -374,14 +428,14 @@ tailwind.config = {
   </div>
 
   <div class="grid sm:grid-cols-3 gap-4">
-    <div class="panel p-5"><i data-lucide="clock" class="w-5 h-5 mb-2" style="color:var(--fis)" aria-hidden="true"></i><h3 class="font-semibold text-sm">Gestão de tempo</h3><p class="text-xs mt-1" style="color:var(--ink-soft)">Média de 3 min/questão. Técnica do "comando primeiro": leia a pergunta antes do texto-suporte longo.</p></div>
-    <div class="panel p-5"><i data-lucide="ruler" class="w-5 h-5 mb-2" style="color:var(--fis)" aria-hidden="true"></i><h3 class="font-semibold text-sm">Análise dimensional</h3><p class="text-xs mt-1" style="color:var(--ink-soft)">Esqueceu a fórmula? Use as unidades: se a resposta é em watts (J/s), divida joules pelo tempo em segundos.</p></div>
-    <div class="panel p-5"><i data-lucide="pencil-line" class="w-5 h-5 mb-2" style="color:var(--fis)" aria-hidden="true"></i><h3 class="font-semibold text-sm">Cartão-resposta</h3><p class="text-xs mt-1" style="color:var(--ink-soft)">Reserve os últimos 20–30 minutos exclusivamente para transcrever o gabarito com calma.</p></div>
+    <div class="panel p-5"><i data-lucide="clock" class="w-5 h-5 mb-2" style="color:var(--fis)" aria-hidden="true"></i><h3 class="font-semibold text-sm">Gestão de tempo</h3><p class="text-xs mt-1" style="color:var(--ink-soft)">Média de 3 min por questão. Técnica de eliminação rápida: riscar o que é impossível e avançar.</p></div>
+    <div class="panel p-5"><i data-lucide="ruler" class="w-5 h-5 mb-2" style="color:var(--fis)" aria-hidden="true"></i><h3 class="font-semibold text-sm">Análise dimensional</h3><p class="text-xs mt-1" style="color:var(--ink-soft)">Esqueceu a fórmula? olhe as unidades: se a resposta é em watts, a conta deve terminar em J/s.</p></div>
+    <div class="panel p-5"><i data-lucide="pencil-line" class="w-5 h-5 mb-2" style="color:var(--fis)" aria-hidden="true"></i><h3 class="font-semibold text-sm">Cartão-resposta</h3><p class="text-xs mt-1" style="color:var(--ink-soft)">Reserve os últimos 20 a 30 minutos para marcar com calma e checar a sequência final do gabarito.</p></div>
   </div>
 
   <div class="panel p-6 flex flex-wrap items-center justify-between gap-4">
-    <div><h3 class="font-display font-semibold">Checklist de estudos da reta final</h3><p class="text-xs mt-1" style="color:var(--ink-soft)">Versão para impressão/PDF com caixas de seleção por componente.</p></div>
-    <a href="checklist.html" class="px-5 py-2.5 rounded-lg text-white text-sm font-semibold flex items-center gap-2" style="background:var(--fis)"><i data-lucide="external-link" class="w-4 h-4" aria-hidden="true"></i>Abrir checklist</a>
+    <div><h3 class="font-display font-semibold">Checklist de estudos da reta final</h3><p class="text-xs mt-1" style="color:var(--ink-soft)">Versão para impressão/PDF com caixas de seleção para acompanhamento do estudante.</p></div>
+    <a href="checklist.html" class="px-5 py-2.5 rounded-lg text-white text-sm font-semibold flex items-center gap-2" style="background:var(--fis)"><i data-lucide="external-link" class="w-4 h-4" aria-hidden="true"></i> Abrir checklist</a>
   </div>
 </section>
 
@@ -389,7 +443,7 @@ tailwind.config = {
 <section id="tab-galeria" class="tab-panel hidden space-y-6" role="tabpanel" aria-labelledby="tabbtn-galeria" tabindex="0">
   <div class="panel p-6">
     <h2 class="font-display text-xl font-semibold">Galeria de fotos</h2>
-    <p class="mt-3 text-sm leading-relaxed" style="color:var(--ink-soft)">Esta seção está reservada para o registro fotográfico do aulão de Ciências da Natureza, realizado em Juscimeira-MT pelo Projeto Pré-ENEM Digit@l MT. As fotos estão publicadas aqui logo após o evento, documentando a participação dos estudantes e a aplicação das atividades deste REA — como o estudo de caso da Estação de Tratamento de Água e a dinâmica Think-Pair-Share. Conferir os registros!</p>
+    <p class="mt-3 text-sm leading-relaxed" style="color:var(--ink-soft)">Esta seção está reservada para o registro fotográfico do aulão de Ciências da Natureza, realizado em Juscimeira-MT com estudantes, professores e momentos da aula prática em Ciências da Natureza. As fotos serão carregadas em conjunto com a documentação do projeto.</p>
   </div>
 
   <div class="panel p-6">
@@ -417,29 +471,29 @@ tailwind.config = {
 <script>
 /* ================= DADOS (mapa_calor.csv) ================= */
 const HEAT=[
-["Biologia","Ecologia","Impactos Ambientais e Poluição",14.5,"Muito Alta","#D9534F","C3-H8, C3-H10, C3-H11","Avaliar perturbações ambientais, poluição, eutrofização e propor medidas mitigadoras e sustentáveis."],
+["Biologia","Ecologia","Impactos Ambientais e Poluição",14.5,"Muito Alta","#D9534F","C3-H8, C3-H10, C3-H11","Avaliar perturbações ambientais, poluição, eutrofização e propor medidas mitigadoras."],
 ["Física","Eletricidade","Circuitos Elétricos e Eletrodinâmica",12.0,"Muito Alta","#D9534F","C2-H5, C2-H6","Analisar circuitos elétricos, associação de resistores, corrente, tensão, potência e consumo de energia."],
 ["Química","Físico-Química","Estequiometria e Concentração de Soluções",11.2,"Muito Alta","#D9534F","C7-H24, C7-H25","Calcular relações quantitativas de massa/mol e concentração de soluções em processos químicos e industriais."],
 ["Física","Ondulatória","Fenômenos Ondulatórios e Acústica",9.8,"Alta","#F0AD4E","C1-H1, C1-H3","Interpretar refração, difração, interferência, ressonância, eco e cancelamento de ruído em ondas sonoras e eletromagnéticas."],
-["Química","Química Geral e Ambiental","Separação de Misturas e Tratamento de Água",8.5,"Alta","#F0AD4E","C7-H24, C3-H10","Identificar e comparar processos de separação de fases (floculação, decantação, filtração, destilação) e purificação de água."],
+["Química","Química Geral e Ambiental","Separação de Misturas e Tratamento de Água",8.5,"Alta","#F0AD4E","C7-H24, C3-H10","Identificar e comparar processos de separação de fases (floculação, decantação, filtração, destilação) e purificação da água."],
 ["Biologia","Ecologia","Cadeias Alimentares e Fluxo de Energia",8.2,"Alta","#F0AD4E","C3-H8, C3-H9","Compreender as relações tróficas entre produtores, consumidores e decompositores e a eficiência de transferência energética."],
-["Biologia","Citologia","Metabolismo Celular e Organelas",7.8,"Alta","#F0AD4E","C4-H13, C4-H14","Relacionar a ultrastrutura celular e funções de organelas (mitocôndrias, cloroplastos, citoesqueleto) à respiração e fotossíntese."],
+["Biologia","Citologia","Metabolismo Celular e Organelas",7.8,"Alta","#F0AD4E","C4-H13, C4-H14","Relacionar a ultrastrutura celular e funções de organelas (mitocôndrias, cloroplastos, citosqueleto) à respiração e fotossíntese."],
 ["Química","Química Orgânica","Funções Orgânicas e Propriedades Físicas",7.5,"Alta","#F0AD4E","C7-H24, C7-H25","Reconhecer grupos funcionais, polaridade, interações intermoleculares e pontos de ebulição/solubilidade de compostos orgânicos."],
-["Física","Mecânica","Conservação de Energia e Trabalho",7.2,"Média","#FFD166","C2-H5, C2-H6","Aplicar o princípio de conservação e transformação da energia mecânica (cinética e potencial) e cálculo de trabalho."],
-["Química","Físico-Química","Termoquímica e Cinética Química",7.0,"Média","#FFD166","C7-H25, C7-H26","Calcular variação de entalpia (ΔH) e analisar fatores que alteram a velocidade de reações químicas (temperatura, catalisadores)."],
-["Química","Físico-Química","Equilíbrio Químico e pH/pKa",6.8,"Média","#FFD166","C7-H25, C7-H27","Avaliar deslocamentos de equilíbrio (Princípio de Le Chatelier), constante de acidez e variação de pH/pKa em soluções."],
-["Biologia","Genética e Biotecnologia","Biotecnologia e Engenharia Genética",6.5,"Média","#FFD166","C4-H15, C4-H16","Compreender técnicas modernas de DNA recombinante, PCR, clonagem, terapia gênica, OGM e testes de paternidade."],
+["Física","Mecânica","Conservação de Energia e Trabalho",7.2,"Média","#FFD166","C2-H5, C2-H6","Aplicar o princípio de conservação e transformação da energia mecânica (cinética e potencial) e trabalho."],
+["Química","Físico-Química","Termoquímica e Cinética Química",7.0,"Média","#FFD166","C7-H25, C7-H26","Calcular variação de entalpia (ΔH) e analisar fatores que alteram a velocidade de reações (temperatura, catalisadores)."],
+["Química","Físico-Química","Equilíbrio Químico e pH/pKa",6.8,"Média","#FFD166","C7-H25, C7-H27","Avaliar deslocamentos de equilíbrio (Princípio de Le Chatelier), constante de acidez e variação de pH em soluções."],
+["Biologia","Genética e Biotecnologia","Biotecnologia e Engenharia Genética",6.5,"Média","#FFD166","C4-H15, C4-H16","Compreender técnicas modernas de DNA recombinante, PCR, clonagem, terapia gênica e testes de paternidade."],
 ["Física","Termofísica","Calorimetria e Propagação do Calor",6.4,"Média","#FFD166","C2-H5, C2-H7","Calcular trocas de calor sensível/latente e analisar processos de condução, convecção e radiação térmica em sistemas."],
-["Biologia","Ecologia","Ciclos Biogeoquímicos",6.1,"Média","#FFD166","C3-H8","Analisar a circulação de elementos químicos (Carbono, Nitrogênio, Água, Fósforo) no ecossistema e o impacto de queimadas/combustíveis."],
-["Química","Físico-Química","Eletroquímica (Pilhas, Eletrólise e Corrosão)",5.8,"Média","#FFD166","C7-H24, C7-H26","Analisar potenciais de oxirredução, funcionamento de baterias, corrosão de metais e proteção anódica."],
+["Biologia","Ecologia","Ciclos Biogeoquímicos",6.1,"Média","#FFD166","C3-H8","Analisar a circulação de elementos químicos (Carbono, Nitrogênio, Água, Fósforo) no ecossistema e o impacto de queimadas/contaminações."],
+["Química","Físico-Química","Eletroquímica (Pilhas, Eletrólise e Corrosão)",5.8,"Média","#FFD166","C7-H24, C7-H26","Analisar potenciais de oxirredução, funcionamento de baterias, corrosão de metais e processos eletrolíticos."],
 ["Biologia","Fisiologia e Saúde","Imunologia, Vacinas e Soros",5.5,"Baixa","#5CB85C","C4-H14, C8-H28","Diferenciar imunização ativa (vacinas) e passiva (soros) e compreender a resposta imune humoral e celular."],
-["Química","Química Geral","Transformações e Ligações Químicas",5.2,"Baixa","#5CB85C","C7-H24","Correlacionar o tipo de ligação química (iónica, covalente, metálica) às propriedades físicas e químicas das substâncias."],
+["Química","Química Geral","Transformações e Ligações Químicas",5.2,"Baixa","#5CB85C","C7-H24","Correlacionar o tipo de ligação química (iônica, covalente, metálica) às propriedades físicas e químicas das substâncias."],
 ["Biologia","Fisiologia e Saúde","Parasitoses e Saúde Pública",5.0,"Baixa","#5CB85C","C8-H28, C8-H30","Identificar agentes etiológicos, vetores, ciclos biológicos de viroses, bacterioses, protozooses e profilaxia de doenças."],
-["Biologia","Genética e Biotecnologia","Genética Mendeliana e Molecular",4.8,"Baixa","#5CB85C","C4-H13, C4-H15","Interpretar heredogramas, probabilidade genética, doação de sangue (sistema ABO/Rh) e síntese de proteínas."],
+["Biologia","Genética e Biotecnologia","Genética Mendeliana e Molecular",4.8,"Baixa","#5CB85C","C4-H13, C4-H15","Interpretar heredogramas, probabilidade genética, doação de sangue (sistema ABO/Rh) e sínteses proteicas."],
 ["Química","Química Orgânica","Reações Orgânicas e Polímeros",4.5,"Baixa","#5CB85C","C7-H26, C3-H10","Analisar reações de esterificação, saponificação (sabões e detergentes), polimerização e biodegradação."],
 ["Física","Mecânica","Impulso, Colisões e Leis de Newton",4.5,"Baixa","#5CB85C","C2-H5","Analisar variação de quantidade de movimento, força de impacto em acidentes e dispositivos de segurança veicular (airbag/pneus)."],
-["Física","Eletricidade","Eletromagnetismo e Indução Magnética",4.2,"Baixa","#5CB85C","C2-H6, C2-H7","Compreender indução eletromagnética (Lei de Faraday), geradores de usinas elétricas e transformação de fluxo magnético em força eletromotriz."],
-["Física","Óptica","Óptica Geométrica e Lentes Corretivas",4.0,"Baixa","#5CB85C","C1-H1, C1-H2","Analisar a propagação retilínea da luz, refração em lentes e espelhos e correção de defeitos de visão (miopia e hipermetropia)."]
+["Física","Eletricidade","Eletromagnetismo e Indução Magnética",4.2,"Baixa","#5CB85C","C2-H6, C2-H7","Compreender indução eletromagnética (Lei de Faraday), geradores de usinas elétricas e transformadores de fluxo magnético."],
+["Física","Óptica","Óptica Geométrica e Lentes Corretivas",4.0,"Baixa","#5CB85C","C1-H1, C1-H2","Analisar a propagação retilínea da luz, refração em lentes e espelhos e correção de defeitos de visão (miopia e hipermetropia)."],
 ];
 
 /* ================= TEMA CLARO/ESCURO ================= */
@@ -455,13 +509,17 @@ document.getElementById('darkToggle').onclick=()=>{
 
 /* ================= ABAS (com navegação por teclado: setas, Home, End) ================= */
 const tabBtns=Array.from(document.querySelectorAll('.tab-btn'));
+function getTabPanel(button){
+  const panelId = button.dataset.tab;
+  return document.getElementById(panelId) || document.getElementById('tab-' + panelId);
+}
 function activateTab(b,opts){
   opts=opts||{};
-  tabBtns.forEach(x=>{x.setAttribute('aria-selected','false');x.tabIndex=-1;});
-  b.setAttribute('aria-selected','true');b.tabIndex=0;
+  tabBtns.forEach(x=>{x.setAttribute('aria-selected','false');x.setAttribute('aria-expanded','false');x.tabIndex=-1;});
+  b.setAttribute('aria-selected','true');b.setAttribute('aria-expanded','true');b.tabIndex=0;
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.add('hidden'));
-  const p=document.getElementById('tab-'+b.dataset.tab);
-  p.classList.remove('hidden');p.classList.remove('fade-in');void p.offsetWidth;p.classList.add('fade-in');
+  const p=getTabPanel(b);
+  if(p){p.classList.remove('hidden');p.classList.remove('fade-in');void p.offsetWidth;p.classList.add('fade-in');}
   if(opts.focus)b.focus();
 }
 tabBtns.forEach((b,i)=>{
@@ -475,7 +533,7 @@ tabBtns.forEach((b,i)=>{
     if(idx!==null){e.preventDefault();activateTab(tabBtns[idx],{focus:true});}
   });
 });
-function goToTab(name){activateTab(document.querySelector('[data-tab="'+name+'"]'));}
+function goToTab(name){const btn=document.querySelector('[data-tab="'+name+'"]'); if(btn) activateTab(btn);}
 
 /* ================= SUB-ABAS DA MATRIZ TRI ================= */
 const subtabBtns=Array.from(document.querySelectorAll('.subtab-btn'));
@@ -485,6 +543,27 @@ subtabBtns.forEach(b=>b.onclick=()=>{
   document.querySelectorAll('.subtab-panel').forEach(p=>p.classList.add('hidden'));
   document.getElementById('tri-'+b.dataset.subtab).classList.remove('hidden');
   lucide.createIcons();
+});
+
+/* ================= MODO ANALÍTICO: AULÃO DE VÉSPERA ================= */
+document.querySelectorAll('.aulao-option').forEach(button => {
+  button.addEventListener('click', () => {
+    const answerGroup = button.closest('.aulao-answers');
+    if (!answerGroup) return;
+    const options = answerGroup.querySelectorAll('.aulao-option');
+    options.forEach(opt => {
+      opt.classList.remove('correct', 'distrator-descartado');
+      opt.setAttribute('aria-pressed', 'false');
+    });
+    button.setAttribute('aria-pressed', 'true');
+    if (button.dataset.correct === 'true') {
+      button.classList.add('correct');
+      return;
+    }
+    button.classList.add('distrator-descartado');
+    const correctOption = Array.from(options).find(opt => opt.dataset.correct === 'true');
+    if (correctOption) correctOption.classList.add('correct');
+  });
 });
 
 /* ================= GRÁFICOS ================= */
@@ -519,7 +598,7 @@ function renderHeat(f){
     const d=document.createElement('button');
     d.className='heat-card text-left rounded-lg p-4';
     d.style.setProperty('--heat-c', r[5]);
-    d.innerHTML='<div class="flex justify-between items-start gap-2"><span class="text-xs font-semibold" style="color:var(--ink-soft)">'+r[0]+' · '+r[1]+'</span><span class="font-mono text-lg font-semibold">'+r[3].toFixed(1)+'%</span></div>'
+    d.innerHTML='<div class="flex justify-between items-start gap-2"><span class="text-xs font-semibold" style="color:var(--ink-soft)">'+r[0]+' · '+r[1]+'</span><span class="font-mono text-lg font-semibold" style="color:var(--ink)">'+r[3].toFixed(1)+'%</span></div>'
       +'<p class="font-semibold text-sm mt-1 leading-snug">'+r[2]+'</p>'
       +'<div class="mt-2 h-1.5 rounded-full" style="background:var(--paper)"><div class="h-full rounded-full" style="width:'+(r[3]/14.5*100)+'%;background:'+r[5]+'"></div></div>'
       +'<p class="text-[11px] mt-2 font-mono" style="color:var(--ink-soft)">'+r[4]+' · '+r[6]+'</p>';
@@ -572,26 +651,14 @@ EUTRO.forEach((s,i)=>{
 
 /* ================= QUIZ TPS ================= */
 const QUIZ=[
-{id:1,nivel:'Fácil',cor:'--easy',foco:'Físico-Química / Separação de Misturas',
- enunciado:'Na etapa final do pré-tratamento de efluentes, flocos formados por agente coagulante precisam ser separados da fase líquida em um tanque sem agitação.',
- pergunta:'Qual é a propriedade física determinante para o sucesso dessa separação gravitacional?',
- alts:['Ponto de ebulição do solvente.','Dificuldade de solubilidade de gases.','Diferença de densidade entre o floco e a água.','Pressão de vapor da mistura.','Viscosidade cinemática do fluido.'],
- gab:2,
- comentario:'A decantação é um processo físico de separação fundamentado na ação da gravidade sobre partículas com densidade superior à do meio aquoso: Peso &gt; Empuxo, logo o floco sedimenta.',
- distrator:'Distrator típico: alternativas A ou E — termos técnicos (ponto de ebulição, viscosidade) que atraem quem busca respostas complexas, violando a simplicidade de um item classificado como FÁCIL na TRI.'},
-{id:2,nivel:'Médio',cor:'--mid',foco:'Ecologia / Química Ambiental',
- enunciado:'O descarte inadequado de efluentes ricos em nitratos e fosfatos em corpos d\'água lênticos deflagra um processo de contaminação que culmina na mortandade de peixes devido à anoxia.',
- pergunta:'Qual sequência de eventos descreve corretamente esse processo ecológico?',
- alts:['Acidificação direta da água → precipitação de metais → morte celular.','Proliferação de algas superficiais → bloqueio da luz solar → decomposição aeróbica → esgotamento do oxigênio dissolvido.','Aumento da salinidade → osmose inversa nos peixes → desidratação aquática.','Reação do nitrato com o cloro → formação de gás tóxico → sufocamento imediato.','Bloqueio dos estômatos vegetais → interrupção da transpiração → seca do reservatório.'],
- gab:1,
- comentario:'O processo é a eutrofização antropogênica: o excesso de nutrientes gera um "bloom" de algas que impede a fotossíntese nas camadas profundas; os decompositores aeróbicos então consomem o oxigênio dissolvido até a anoxia.',
- distrator:'Distrator típico: alternativa D — associa conceitos de química corretos isoladamente (nitrato, cloro), mas falsos para o fenômeno ecológico em questão (perfil "Falsa Verdade").'}
+{id:1,nivel:'Fácil',cor:'--easy',foco:'Físico-Química / Separação de Misturas',enunciado:'Na etapa final do pré-tratamento de efluentes, flocos formados por agente coagulante precisam ser separados da fase líquida em um tanque sem agitação.',pergunta:'Qual é a propriedade física determinante para o sucesso dessa separação gravitacional?',alts:['Ponto de ebulição do solvente.','Dificuldade de solubilidade de gases.','Diferença de densidade entre o floco e a água.','Pressão de vapor da mistura.','Viscosidade cinemática do fluido.'],gab:2,comentario:'A decantação é um processo físico de separação fundamentado na ação da gravidade sobre partículas com densidade superior à do meio aquoso: Peso > Empuxo, logo o floco se sedimenta.',distrator:'Distrator típico: alternativas A ou E — termos técnicos (ponto de ebulição, viscosidade) que atraem quem busca respostas complexas, violando a simplicidade de um item classificado como fácil na TRI.'},
+{id:2,nivel:'Médio',cor:'--mid',foco:'Ecologia / Química Ambiental',enunciado:'O descarte inadequado de efluentes ricos em nitratos e fosfatos em corpos d\'água lênticos deflagra um processo de contaminação que culmina na mortandade de peixes devido à anoxia.',pergunta:'Qual sequência de eventos descreve corretamente esse processo ecológico?',alts:['Acidificação direta da água → precipitação de metais → morte celular.','Proliferação de algas superficiais → bloqueio da luz solar → decomposição aeróbica → esgotamento do oxigênio dissolvido → mortandade.','Aumento da salinidade → osmose inversa nos peixes → dano nos tecidos.','Reação de nitrato com cloro → formação de gás cloro → toxicidade imediata.','Bloqueio dos estoques vegetais → interação na cadeia alimentar → recuperação do ecossistema.'],gab:1,comentario:'O processo é a eutrofização antropogênica: o excesso de nutrientes gera um “bloom” de algas que impede a fotossíntese nas camadas profundas; os decompositores aeróbicos então consomem o oxigênio e causam anoxia.',distrator:'Distrator típico: alternativa D — associa conceitos de química corretos isoladamente (nitrato, cloro), mas falsos para o fenômeno ecológico em questão (perfil “Falsa Verdade”).'}
 ];
 const qc=document.getElementById('quizContainer');
 QUIZ.forEach(q=>{
   const c=document.createElement('div');c.className='panel p-6';
   c.innerHTML='<div class="flex items-center gap-2 flex-wrap">'
-    +'<span class="text-xs font-semibold px-2.5 py-1 rounded-lg font-mono" style="background:color-mix(in srgb, var('+q.cor+') 15%, var(--paper-raised));color:var('+q.cor+')">Questão '+q.id+' · Nível '+q.nivel+'</span>'
+    +'<span class="text-xs font-semibold px-2.5 py-1 rounded-lg font-mono" style="background:color-mix(in srgb, var('+q.cor+') 15%, var(--paper-raised));color:var('+q.cor+')">Questão '+q.id+' · '+q.nivel+'</span>'
     +'<span class="text-xs font-medium px-2.5 py-1 rounded-lg" style="background:var(--paper);color:var(--ink-soft)">'+q.foco+'</span></div>'
     +'<p class="mt-3 text-sm leading-relaxed">'+q.enunciado+'</p>'
     +'<p class="mt-2 text-sm font-semibold">'+q.pergunta+'</p>'
@@ -600,8 +667,8 @@ QUIZ.forEach(q=>{
     +'<button class="btn-gab px-4 py-2 rounded-lg text-white text-xs font-semibold" style="background:var(--fis)">Gabarito comentado</button>'
     +'<button class="btn-dist px-4 py-2 rounded-lg text-xs font-semibold" style="border:1px solid var(--line)">Análise dos distratores</button>'
     +'</div>'
-    +'<div class="fb-gab hidden mt-4 p-4 rounded-lg text-sm leading-relaxed" style="background:color-mix(in srgb, var(--easy) 12%, var(--paper-raised));border:1px solid var(--easy)"><strong>Gabarito: '+'ABCDE'[q.gab]+')</strong> '+q.comentario+'</div>'
-    +'<div class="fb-dist hidden mt-4 p-4 rounded-lg text-sm leading-relaxed" style="background:color-mix(in srgb, var(--mid) 12%, var(--paper-raised));border:1px solid var(--mid)">'+q.distrator+'</div>';
+    +'<div class="fb-gab hidden mt-4 p-4 rounded-lg text-sm leading-relaxed" style="background:color-mix(in srgb, var(--easy) 12%, var(--paper-raised));border:1px solid var(--easy)"><strong>Gabarito:</strong> '+q.alts[q.gab]+'<br><em>Comentário:</em> '+q.comentario+'</div>'
+    +'<div class="fb-dist hidden mt-4 p-4 rounded-lg text-sm leading-relaxed" style="background:color-mix(in srgb, var(--mid) 12%, var(--paper-raised));border:1px solid var(--mid)"><strong>Distratores:</strong> '+q.distrator+'</div>';
   const box=c.querySelector('.alts');
   q.alts.forEach((a,i)=>{
     const b=document.createElement('button');b.className='alt-btn';b.textContent='ABCDE'[i]+') '+a;
@@ -638,9 +705,9 @@ timerStart.onclick=()=>{
 
 /* ================= DISTRATORES ================= */
 const DIST=[
-{k:'extrapolacao',perfil:'A falsa verdade (extrapolação)',gatilho:'Afirmação perfeita na teoria, mas sem amparo no texto-suporte.',acao:'Volte ao comando da questão e verifique o texto. Se o texto não cita, elimine.',ex:'"O cloro mata vírus" — verdade científica, mas o texto tratava de eutrofização.'},
-{k:'inversor',perfil:'O inversor de causa e efeito (contradição)',gatilho:'Inverte a relação de causalidade (ex.: diz que a temperatura subiu por causa da pressão).',acao:'Escreva no rascunho: [CAUSA] → [EFEITO] e compare com o texto.',ex:'"A anoxia causou o bloom de algas" — na verdade, o bloom antecede e induz a anoxia.'},
-{k:'generalista',perfil:'O generalista absoluto (reducionismo)',gatilho:'Uso de palavras restritivas: "sempre", "nunca", "exclusivamente", "único".',acao:'Desconfie imediatamente. Fenômenos biológicos e químicos raramente são absolutos.',ex:'"A poluição é causada exclusivamente pela indústria" — fenômeno multifatorial reduzido a uma variável.'}
+{k:'extrapolacao',perfil:'A falsa verdade (extrapolação)',gatilho:'Afirmação perfeita na teoria, mas sem amparo no texto-suporte.',acao:'Volte ao comando da questão e verifique o texto. Se o texto não disser aquilo, elimine.',ex:'Exemplo: “a água é altamente alcalina” em um enunciado sobre decantação de flocos, sem qualquer dado de pH ou solução.'},
+{k:'inversor',perfil:'O inversor de causa e efeito (contradição)',gatilho:'Inverte a relação de causalidade (ex.: diz que a temperatura subiu por causa da pressão).',acao:'Escreva no rascunho a relação correta e compare com a alternativa. Se a causa e o efeito ficarem trocados, risque.',ex:'Exemplo: “mais nutrientes → menos algas” em um item de eutrofização, o oposto do que se observa.'},
+{k:'generalista',perfil:'O generalista absoluto (reducionismo)',gatilho:'Uso de palavras restritivas: “sempre”, “nunca”, “exclusivamente”, “único”.',acao:'Desconfie imediatamente. Fenômenos biológicos e químicos raramente são tão absolutos.',ex:'Exemplo: “Todo tratamento de água usa cloro em qualquer contexto” — não vale para todos os sistemas e condições.'}
 ];
 function renderDist(f){
   const tb=document.querySelector('#distTable tbody');tb.innerHTML='';
@@ -679,4 +746,3 @@ lucide.createIcons();
 </script>
 </body>
 </html>
- 
