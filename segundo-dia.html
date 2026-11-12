@@ -48,20 +48,29 @@ tailwind.config = {
   .font-display{font-family:'Space Grotesk',system-ui,sans-serif}
   .font-mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
 
-  .scanfield{background-color:#0B1013;background-image:radial-gradient(circle at 1px 1px, rgba(255,255,255,.08) 1px, transparent 0);background-size:24px 24px}
+  .scanfield{
+    background-color:#0B1013;
+    background-image:radial-gradient(circle at 1px 1px, rgba(255,255,255,.08) 1px, transparent 0);
+    background-size:24px 24px;
+  }
+
   .panel{background:var(--paper-raised);border:1px solid var(--line);border-radius:12px}
+
   .tab-strip{border-bottom:1px solid var(--line)}
   .tab-btn{position:relative;padding:.85rem .25rem;font-size:.9rem;font-weight:600;color:var(--ink-soft);white-space:nowrap;background:none;border:none;cursor:pointer}
   .tab-btn::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:3px;background:transparent;border-radius:2px 2px 0 0}
   .tab-btn:hover{color:var(--ink)}
   .tab-btn[aria-selected="true"], .tab-btn[aria-expanded="true"]{color:var(--ink)}
   .tab-btn[aria-selected="true"]::after{background:var(--accent-glow)}
+
   .subtab-btn{padding:.5rem 1rem;border-radius:9999px;font-size:.8rem;font-weight:600;border:1px solid var(--line);background:var(--paper-raised);color:var(--ink-soft);cursor:pointer}
   .subtab-btn[aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+
   .heat-card{transition:transform .15s ease;border-left:5px solid var(--heat-c,#999);background:var(--paper-raised);border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line);border-radius:12px}
   .heat-card:hover{transform:translateY(-2px)}
   .fade-in{animation:fadeIn .3s ease both}
   @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
   .alt-btn{width:100%;text-align:left;padding:.7rem 1rem;border-radius:10px;border:1px solid var(--line);background:var(--paper-raised);font-size:.875rem;color:var(--ink);cursor:pointer;transition:border-color .15s ease, background .15s ease}
   .alt-btn:hover{border-color:var(--fis)}
   .alt-btn.correct{border-color:var(--easy);background:color-mix(in srgb, var(--easy) 12%, var(--paper-raised))}
@@ -76,8 +85,14 @@ tailwind.config = {
   .aulao-option[aria-checked="true"]{border-color:var(--focus);box-shadow:0 0 0 2px color-mix(in srgb, var(--focus) 20%, transparent)}
   .aulao-option.correct{border-color:var(--easy);background:color-mix(in srgb, var(--easy) 12%, var(--paper-raised));color:var(--ink)}
   .aulao-option.correct[aria-checked="true"]{border-color:var(--easy);background:color-mix(in srgb, var(--easy) 18%, var(--paper-raised))}
-  .aulao-option.distrator-descartado{text-decoration:line-through;opacity:.5;border-color:var(--hard);background:color-mix(in srgb, var(--hard) 12%, var(--paper-raised))}
-  .aulao-option.distrator-descartado[aria-checked="true"]{border-color:var(--hard);text-decoration:line-through;opacity:.5}
+  .aulao-option.distrator-descartado{text-decoration:line-through;opacity:.55;border-color:var(--hard);background:color-mix(in srgb, var(--hard) 12%, var(--paper-raised))}
+  .aulao-option.distrator-descartado[aria-checked="true"]{border-color:var(--hard);text-decoration:line-through;opacity:.55}
+  .aulao-feedback{margin-top:.5rem;padding:.75rem .9rem;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;background:color-mix(in srgb, var(--accent) 10%, var(--paper-raised));display:none}
+  .aulao-feedback.visible{display:block}
+  .aulao-feedback strong{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.25rem;color:var(--ink-soft)}
+  .aulao-feedback p{margin:0;font-size:.82rem;line-height:1.5;color:var(--ink)}
+  .aulao-feedback.correct{border-left-color:var(--easy);background:color-mix(in srgb, var(--easy) 12%, var(--paper-raised))}
+  .aulao-feedback.distractor{border-left-color:var(--hard);background:color-mix(in srgb, var(--hard) 12%, var(--paper-raised))}
 
   a:focus-visible, button:focus-visible, .alt-btn:focus-visible, .aulao-option:focus-visible{outline:2.5px solid var(--focus);outline-offset:2px}
   ::-webkit-scrollbar{height:8px;width:8px}::-webkit-scrollbar-thumb{background:#94a3b8;border-radius:8px}
@@ -95,6 +110,7 @@ tailwind.config = {
 </head>
 <body class="min-h-screen" style="background:var(--paper);color:var(--ink)">
 <a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
+
 <header class="scanfield text-white">
   <div class="max-w-6xl mx-auto px-5 pt-10 pb-8 md:pt-14 md:pb-10">
     <div class="flex flex-wrap items-start justify-between gap-6">
@@ -120,16 +136,17 @@ tailwind.config = {
 
 <nav class="sticky top-0 z-40 tab-strip" style="background:var(--paper-raised)" role="tablist" aria-label="Seções do painel">
   <div class="max-w-6xl mx-auto px-5 flex gap-7 overflow-x-auto">
-    <button class="tab-btn" data-tab="dashboard" role="tab" aria-selected="false" tabindex="-1" aria-controls="tab-dashboard" id="tabbtn-dashboard">Dashboard analítico</button>
-    <button class="tab-btn" data-tab="estudo" role="tab" aria-selected="false" tabindex="-1" aria-controls="tab-estudo" id="tabbtn-estudo">Estudo de caso: água</button>
-    <button class="tab-btn" data-tab="desafio" role="tab" aria-selected="false" tabindex="-1" aria-controls="tab-desafio" id="tabbtn-desafio">Think-Pair-Share</button>
-    <button class="tab-btn" data-tab="checklist" role="tab" aria-selected="false" tabindex="-1" aria-controls="tab-checklist" id="tabbtn-checklist">Distratores e TRI</button>
+    <button class="tab-btn" data-tab="dashboard" role="tab" aria-selected="false" tabindex="-1" aria-controls="tab-dashboard" aria-expanded="false" id="tabbtn-dashboard">Dashboard analítico</button>
+    <button class="tab-btn" data-tab="estudo" role="tab" aria-selected="false" tabindex="-1" aria-controls="tab-estudo" aria-expanded="false" id="tabbtn-estudo">Estudo de caso: água</button>
+    <button class="tab-btn" data-tab="desafio" role="tab" aria-selected="false" tabindex="-1" aria-controls="tab-desafio" aria-expanded="false" id="tabbtn-desafio">Think-Pair-Share</button>
+    <button class="tab-btn" data-tab="checklist" role="tab" aria-selected="false" tabindex="-1" aria-controls="tab-checklist" aria-expanded="false" id="tabbtn-checklist">Distratores e TRI</button>
     <button class="tab-btn" data-tab="aulao-vespera" role="tab" aria-selected="false" tabindex="-1" aria-controls="aulao-vespera" aria-expanded="false" id="tabbtn-aulao">Aulão de Véspera</button>
     <button class="tab-btn" data-tab="geral" role="tab" aria-selected="true" tabindex="0" aria-controls="tab-geral" aria-expanded="true" id="tabbtn-geral">Créditos</button>
   </div>
 </nav>
 
 <main id="conteudo" class="max-w-6xl mx-auto px-5 py-8">
+
 <section id="tab-geral" class="tab-panel fade-in space-y-6" role="tabpanel" aria-labelledby="tabbtn-geral" tabindex="0">
   <div class="panel p-6">
     <h2 class="font-display text-xl font-semibold mb-4">Sobre a Professora</h2>
@@ -200,33 +217,36 @@ tailwind.config = {
       <h3>Questão 1 · Pilhas e eletrólise</h3>
       <p class="text-sm leading-relaxed" style="color:var(--ink-soft)">Em uma pilha, a reação espontânea ocorre quando um metal atua como agente redutor e o outro como agente oxidante. Qual alternativa descreve corretamente a relação entre polo e processo?</p>
       <div class="aulao-answers" role="radiogroup" aria-label="Alternativas da questão 1">
-        <button class="aulao-option" type="button" role="radio" aria-checked="false" aria-label="Alternativa A: O ânodo é o polo positivo, porque aí ocorre redução." data-correct="false">A) O ânodo é o polo positivo, porque aí ocorre redução.</button>
-        <button class="aulao-option" type="button" role="radio" aria-checked="false" aria-label="Alternativa B: O ânodo é o polo negativo, porque aí ocorre oxidação." data-correct="true">B) O ânodo é o polo negativo, porque aí ocorre oxidação.</button>
-        <button class="aulao-option" type="button" role="radio" aria-checked="false" aria-label="Alternativa C: O cátodo é o polo negativo, porque aí ocorre oxidação." data-correct="false">C) O cátodo é o polo negativo, porque aí ocorre oxidação.</button>
-        <button class="aulao-option" type="button" role="radio" aria-checked="false" aria-label="Alternativa D: O cátodo é o polo positivo, porque aí ocorre oxidação." data-correct="false">D) O cátodo é o polo positivo, porque aí ocorre oxidação.</button>
+        <button class="aulao-option" type="button" role="radio" aria-checked="false" aria-label="Alternativa A: O ânodo é o polo positivo, porque aí ocorre redução." data-correct="false" data-feedback="Distrator clássico de reversão de termos: em pilhas, o ânodo é negativo e nele ocorre oxidação; a redução ocorre no cátodo.">A) O ânodo é o polo positivo, porque aí ocorre redução.</button>
+        <button class="aulao-option" type="button" role="radio" aria-checked="false" aria-label="Alternativa B: O ânodo é o polo negativo, porque aí ocorre oxidação." data-correct="true" data-feedback="Correta: o ânodo é o polo negativo e o local em que ocorre oxidação; o cátodo é o polo positivo e o local de redução.">B) O ânodo é o polo negativo, porque aí ocorre oxidação.</button>
+        <button class="aulao-option" type="button" role="radio" aria-checked="false" aria-label="Alternativa C: O cátodo é o polo negativo, porque aí ocorre oxidação." data-correct="false" data-feedback="Distrator de confusão entre cátodo e ânodo. O cátodo é o polo positivo nas pilhas, e o processo ali é redução.">C) O cátodo é o polo negativo, porque aí ocorre oxidação.</button>
+        <button class="aulao-option" type="button" role="radio" aria-checked="false" aria-label="Alternativa D: O cátodo é o polo positivo, porque aí ocorre oxidação." data-correct="false" data-feedback="Distrator de inversão completa: o cátodo é positivo, mas o processo é redução, não oxidação.">D) O cátodo é o polo positivo, porque aí ocorre oxidação.</button>
       </div>
+      <div class="aulao-feedback" aria-live="polite"></div>
     </article>
 
     <article class="panel p-5 aulao-question" aria-live="polite">
       <h3>Questão 2 · Química ambiental</h3>
       <p class="text-sm leading-relaxed" style="color:var(--ink-soft)">Um corpo d'água recebe excesso de nutrientes e passa a apresentar crescimento de algas na superfície. Qual sequência melhor explica o processo de eutrofização?</p>
       <div class="aulao-answers" role="radiogroup" aria-label="Alternativas da questão 2">
-        <button class="aulao-option" type="button" role="radio" aria-checked="false" aria-label="Alternativa A: Acidificação direta, precipitação de metais, morte celular." data-correct="false">A) Acidificação direta → precipitação de metais → morte celular.</button>
-        <button class="aulao-option" type="button" role="radio" aria-checked="false" aria-label="Alternativa B: Proliferação de algas, bloqueio da luz, decomposição aeróbica, esgotamento do oxigênio." data-correct="true">B) Proliferação de algas → bloqueio da luz → decomposição aeróbica → esgotamento do oxigênio.</button>
-        <button class="aulao-option" type="button" role="radio" aria-checked="false" aria-label="Alternativa C: Proliferação de algas, bloqueio da luz, decomposição aeróbica, anoxia." data-correct="false">C) Proliferação de algas → bloqueio da luz → decomposição aeróbica → anoxia.</button>
-        <button class="aulao-option" type="button" role="radio" aria-checked="false" aria-label="Alternativa D: Diluição do fertilizante, aumento da salinidade, morte de peixes." data-correct="false">D) Diluição do fertilizante → aumento da salinidade → morte de peixes.</button>
+        <button class="aulao-option" type="button" role="radio" aria-checked="false" aria-label="Alternativa A: Acidificação direta, precipitação de metais, morte celular." data-correct="false" data-feedback="Distrator que mistura processos de poluição e química ambiental sem relação com o ciclo de eutrofização.">A) Acidificação direta → precipitação de metais → morte celular.</button>
+        <button class="aulao-option" type="button" role="radio" aria-checked="false" aria-label="Alternativa B: Proliferação de algas, bloqueio da luz, decomposição aeróbica, esgotamento do oxigênio." data-correct="true" data-feedback="Correta: excesso de nutrientes provoca proliferação de algas; a sombra reduz a fotossíntese; a decomposição consume oxigênio e leva à anoxia.">B) Proliferação de algas → bloqueio da luz → decomposição aeróbica → esgotamento do oxigênio.</button>
+        <button class="aulao-option" type="button" role="radio" aria-checked="false" aria-label="Alternativa C: Proliferação de algas, bloqueio da luz, decomposição aeróbica, anoxia." data-correct="false" data-feedback="Distrator quase correto: omite a etapa fundamental de ganho de nutrientes e não enfatiza a lógica causal completa do processo.">C) Proliferação de algas → bloqueio da luz → decomposição aeróbica → anoxia.</button>
+        <button class="aulao-option" type="button" role="radio" aria-checked="false" aria-label="Alternativa D: Diluição do fertilizante, aumento da salinidade, morte de peixes." data-correct="false" data-feedback="Distrator mecânico: menciona fertilizante e morte de peixes, mas ignora a sequência causal real da eutrofização.">D) Diluição do fertilizante → aumento da salinidade → morte de peixes.</button>
       </div>
+      <div class="aulao-feedback" aria-live="polite"></div>
     </article>
 
     <article class="panel p-5 aulao-question" aria-live="polite">
       <h3>Questão 3 · Separação de misturas</h3>
       <p class="text-sm leading-relaxed" style="color:var(--ink-soft)">Na etapa final do tratamento de água, o floco formado por coagulante precisa ser removido da fase líquida em um tanque sem agitação. A propriedade decisiva para essa remoção é:</p>
       <div class="aulao-answers" role="radiogroup" aria-label="Alternativas da questão 3">
-        <button class="aulao-option" type="button" role="radio" aria-checked="false" aria-label="Alternativa A: O ponto de ebulição da água." data-correct="false">A) O ponto de ebulição da água.</button>
-        <button class="aulao-option" type="button" role="radio" aria-checked="false" aria-label="Alternativa B: A diferença de densidade entre o floco e a água." data-correct="true">B) A diferença de densidade entre o floco e a água.</button>
-        <button class="aulao-option" type="button" role="radio" aria-checked="false" aria-label="Alternativa C: A viscosidade cinemática do líquido." data-correct="false">C) A viscosidade cinemática do líquido.</button>
-        <button class="aulao-option" type="button" role="radio" aria-checked="false" aria-label="Alternativa D: A pressão de vapor da mistura." data-correct="false">D) A pressão de vapor da mistura.</button>
+        <button class="aulao-option" type="button" role="radio" aria-checked="false" aria-label="Alternativa A: O ponto de ebulição da água." data-correct="false" data-feedback="Distrator que confunde processo de separação por mudança de fase com sedimentação de sólidos em suspensão.">A) O ponto de ebulição da água.</button>
+        <button class="aulao-option" type="button" role="radio" aria-checked="false" aria-label="Alternativa B: A diferença de densidade entre o floco e a água." data-correct="true" data-feedback="Correta: o floco é mais denso que a água e sedimenta; essa diferença de densidade permite a retirada do material coagulado.">B) A diferença de densidade entre o floco e a água.</button>
+        <button class="aulao-option" type="button" role="radio" aria-checked="false" aria-label="Alternativa C: A viscosidade cinemática do líquido." data-correct="false" data-feedback="Distrator que confunde propriedades físicas do líquido com eficiência da decantação.">C) A viscosidade cinemática do líquido.</button>
+        <button class="aulao-option" type="button" role="radio" aria-checked="false" aria-label="Alternativa D: A pressão de vapor da mistura." data-correct="false" data-feedback="Distrator que recorre a propriedade de mudança de fase, sem relação direta com a sedimentação do floco.">D) A pressão de vapor da mistura.</button>
       </div>
+      <div class="aulao-feedback" aria-live="polite"></div>
     </article>
   </div>
 </section>
@@ -292,33 +312,37 @@ subtabBtns.forEach((button) => {
   };
 });
 
-document.querySelectorAll('.aulao-option').forEach((button) => {
-  button.addEventListener('click', () => {
-    const container = button.closest('.aulao-answers');
-    if(!container) return;
+const aulaoQuestions = document.querySelectorAll('.aulao-question');
+aulaoQuestions.forEach((question) => {
+  const options = question.querySelectorAll('.aulao-option');
+  const feedback = question.querySelector('.aulao-feedback');
 
-    const options = container.querySelectorAll('.aulao-option');
-    options.forEach((opt) => {
-      opt.classList.remove('correct', 'distrator-descartado');
-      opt.setAttribute('aria-checked', 'false');
+  options.forEach((option) => {
+    option.addEventListener('click', () => {
+      const correctOption = Array.from(options).find((item) => item.dataset.correct === 'true');
+
+      options.forEach((opt) => {
+        opt.classList.remove('correct', 'distrator-descartado');
+        opt.setAttribute('aria-checked', 'false');
+      });
+
+      if (option.dataset.correct === 'true') {
+        option.classList.add('correct');
+        option.setAttribute('aria-checked', 'true');
+        feedback.className = 'aulao-feedback visible correct';
+        feedback.innerHTML = '<strong>Resposta correta</strong><p>' + option.dataset.feedback + '</p>';
+        return;
+      }
+
+      option.classList.add('distrator-descartado');
+      option.setAttribute('aria-checked', 'true');
+      if (correctOption) {
+        correctOption.classList.add('correct');
+        correctOption.setAttribute('aria-checked', 'true');
+      }
+      feedback.className = 'aulao-feedback visible distractor';
+      feedback.innerHTML = '<strong>Distrator descartado</strong><p>' + option.dataset.feedback + '</p>';
     });
-
-    button.setAttribute('aria-checked', 'true');
-    if(button.dataset.correct === 'true'){
-      button.classList.add('correct');
-      button.setAttribute('aria-label', button.getAttribute('aria-label') + '. Resposta correta.');
-      return;
-    }
-
-    button.classList.add('distrator-descartado');
-    button.setAttribute('aria-label', button.getAttribute('aria-label') + '. Distrator descartado.');
-
-    const correctOption = Array.from(options).find((opt) => opt.dataset.correct === 'true');
-    if(correctOption){
-      correctOption.classList.add('correct');
-      correctOption.setAttribute('aria-checked', 'true');
-      correctOption.setAttribute('aria-label', correctOption.getAttribute('aria-label') + '. Resposta correta.');
-    }
   });
 });
 
